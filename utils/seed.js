@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { DB_URL } from "../config/db.js";
 import { Food } from "../api/model/foodSchema.js";
 
 dotenv.config();
-const DB_URL = process.env.DB_URL;
 
 const foodSeed = [
     {
