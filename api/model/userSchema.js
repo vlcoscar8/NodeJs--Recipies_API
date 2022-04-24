@@ -12,6 +12,13 @@ const userSchema = new Schema({
     age: { type: Number },
 });
 
+userSchema.set("toJSON", {
+    transform: (document, returnedObject) => {
+        delete returnedObject.password;
+        delete returnedObject.email;
+    },
+});
+
 const User = mongoose.model("User", userSchema);
 
 export { User };

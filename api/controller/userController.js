@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../model/userSchema.js";
+import { Recipe } from "../model/recipeSchema.js";
 
 const registerUser = async (req, res, next) => {
     try {
@@ -13,12 +14,22 @@ const registerUser = async (req, res, next) => {
             return next(error);
         }
 
+        const nameUser = await User.findOne({ username: username });
+
+        if (nameUser) {
+            const error = new Error(
+                "The username is already taken, please try again!"
+            );
+            return next(error);
+        }
+
         const passwordHash = await bcrypt.hash(password, 10);
 
         const newUser = new User({
             email: email,
             password: passwordHash,
             username: username,
+            img: "https://res.cloudinary.com/oscar-perez-romero/image/upload/v1650820243/userImage_an9td7.png",
         });
 
         await newUser.save();
@@ -92,4 +103,90 @@ const logOutUser = async (req, res, next) => {
     }
 };
 
-export { registerUser, logInUser, logOutUser };
+const getUserList = async (req, res, next) => {
+    try {
+        const usersList = await User.find();
+
+        res.status(200).json(usersList);
+    } catch (error) {
+        return next(error);
+    }
+};
+
+const getUserDetail = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const user = await User.findById(id);
+
+        res.status(200).json(user);
+    } catch (error) {
+        return next(error);
+    }
+};
+
+const pushUserIntoRecipe = async (req, res, next) => {
+    try {
+        const { userId, recipeId } = req.body;
+
+        await Recipe.findByIdAndUpdate(recipeId, {
+            $push: {
+                owner: userId,
+            },
+        });
+
+        const updatedRecipe = await Recipe.findById(recipeId);
+
+        res.status(200).json(updatedRecipe);
+    } catch (error) {
+        return next(error);
+    }
+};
+
+const editUser = async (req, res, next) => {
+    try {
+        const userBody = req.body;
+        const imageProfile = req.file_url;
+        const { id } = req.params;
+
+        const user = await User.findByIdAndUpdate(id, {
+            img: imageProfile,
+            ...userBody,
+        });
+
+        const updatedUser = await User.findById(id);
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        return next(error);
+    }
+};
+
+const removeUserFromRecipe = async (req, res, next) => {
+    try {
+        const { userId, recipeId } = req.body;
+
+        await Recipe.findByIdAndUpdate(recipeId, {
+            $pull: {
+                owner: userId,
+            },
+        });
+
+        const updatedRecipe = await Recipe.findById(recipeId);
+
+        res.status(200).json(updatedRecipe);
+    } catch (error) {
+        return next(error);
+    }
+};
+
+export {
+    getUserList,
+    getUserDetail,
+    registerUser,
+    logInUser,
+    logOutUser,
+    pushUserIntoRecipe,
+    editUser,
+    removeUserFromRecipe,
+};

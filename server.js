@@ -10,6 +10,7 @@ import { categoriesRouter } from "./api/routes/categories.routes.js";
 import { ingredientRouter } from "./api/routes/ingredients.routes.js";
 import { stepRouter } from "./api/routes/steps.routes.js";
 import { userRouter } from "./api/routes/user.routes.js";
+import { commentsRouter } from "./api/routes/comments.routes.js";
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ server.use("/categories", categoriesRouter);
 server.use("/ingredient", ingredientRouter);
 server.use("/step", stepRouter);
 server.use("/user", userRouter);
+server.use("/comments", commentsRouter);
 
 // Errors
 server.use("*", (req, res, next) => {
