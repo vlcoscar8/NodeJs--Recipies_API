@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import cors from "cors";
 import { connectionDB } from "./config/db.js";
 import { DB_URL } from "./config/db.js";
 import { foodRouter } from "./api/routes/food.routes.js";
@@ -24,6 +25,7 @@ server.set("secretKey", "nodeRestApi");
 //Middlewares
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
+server.use(cors());
 server.use(
     session({
         secret: process.env.SESSION_SECRET,
