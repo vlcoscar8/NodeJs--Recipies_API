@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 
 const recipeSchema = new Schema({
     title: { type: String, required: true },
+    food: { type: String, required: true },
+    category: { type: String, required: true },
     img: { type: String, required: true },
     description: { type: String, required: true },
     difficulty: { type: String, required: true },

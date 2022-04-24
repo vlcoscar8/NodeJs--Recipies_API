@@ -2,7 +2,15 @@ import { Recipe } from "../model/recipeSchema.js";
 
 const getRecipesList = async (req, res, next) => {
     try {
-        const recipesList = await Recipe.find();
+        const { food, category, difficulty, timeLimit } = req.query;
+
+        const filterObj = {
+            ...(food && { food: food }),
+            ...(category && { category: category }),
+            ...(difficulty && { difficulty: difficulty }),
+            ...(timeLimit && { $lte: { time: timeLimit } }),
+        };
+        const recipesList = await Recipe.find(filterObj);
 
         res.status(200).json(recipesList);
     } catch (error) {
