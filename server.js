@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import session from "express-session";
-import passport from "passport";
 import MongoStore from "connect-mongo";
 import { connectionDB } from "./config/db.js";
 import { DB_URL } from "./config/db.js";
@@ -10,6 +9,7 @@ import { recipeRouter } from "./api/routes/recipes.routes.js";
 import { categoriesRouter } from "./api/routes/categories.routes.js";
 import { ingredientRouter } from "./api/routes/ingredients.routes.js";
 import { stepRouter } from "./api/routes/steps.routes.js";
+import { userRouter } from "./api/routes/user.routes.js";
 
 dotenv.config();
 
@@ -23,7 +23,6 @@ server.set("secretKey", "nodeRestApi");
 //Middlewares
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-
 server.use(
     session({
         secret: process.env.SESSION_SECRET,
@@ -45,6 +44,7 @@ server.use("/recipes", recipeRouter);
 server.use("/categories", categoriesRouter);
 server.use("/ingredient", ingredientRouter);
 server.use("/step", stepRouter);
+server.use("/user", userRouter);
 
 // Errors
 server.use("*", (req, res, next) => {

@@ -45,4 +45,6 @@ const isAuth = (req, res, next) => {
     next();
 };
 
+isAuth();
+
 export { isAuth };
