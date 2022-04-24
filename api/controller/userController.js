@@ -149,7 +149,7 @@ const editUser = async (req, res, next) => {
         const imageProfile = req.file_url;
         const { id } = req.params;
 
-        const user = await User.findByIdAndUpdate(id, {
+        await User.findByIdAndUpdate(id, {
             img: imageProfile,
             ...userBody,
         });

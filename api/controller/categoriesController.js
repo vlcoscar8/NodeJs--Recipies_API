@@ -22,6 +22,7 @@ const getRecipeCategoriesList = async (req, res, next) => {
 const getCategoryDetail = async (req, res, next) => {
     try {
         const { id } = req.params;
+
         const category = await RecipeCategory.findById(id).populate("recipes");
 
         res.status(200).json(category);
