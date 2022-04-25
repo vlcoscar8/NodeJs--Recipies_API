@@ -314,6 +314,35 @@
 
 /**
  * @swagger
+ * /food:
+ *    delete:
+ *      summary: Remove a Category from a Food family
+ *      tags: [ Food ]
+ *      requestBody:
+ *        description: The request body needs the category id and the food family id
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  categoryId:
+ *                      type: string
+ *                      description: The category's id to be removes
+ *                      required: true
+ *                  foodId:
+ *                      type: string
+ *                      description: The food's id where the category is removed
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The recipe is successfully removed from the category
+ *          400:
+ *              description: The recipe is not removed from the category
+ */
+
+/**
+ * @swagger
  * /categories:
  *    get:
  *      summary: Returns the category food list
@@ -474,35 +503,6 @@
  *                  categoryId:
  *                      type: string
  *                      description: The category's id where the recipe is removed
- *                      required: true
- *      responses:
- *          200:
- *              description: The recipe is successfully removed from the category
- *          400:
- *              description: The recipe is not removed from the category
- */
-
-/**
- * @swagger
- * /categories/food:
- *    delete:
- *      summary: Remove a Category from a Food family
- *      tags: [ RecipeCategory ]
- *      requestBody:
- *        description: The request body needs the category id and the food family id
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                  categoryId:
- *                      type: string
- *                      description: The category's id to be removes
- *                      required: true
- *                  foodId:
- *                      type: string
- *                      description: The food's id where the category is removed
  *                      required: true
  *      responses:
  *          200:
@@ -734,8 +734,8 @@
 
 /**
  * @swagger
- * /ingredient/:id:
- *    patch:
+ * /ingredient/{id}:
+ *    post:
  *      summary: Create an Ingredient and push into a recipe by Id
  *      tags: [ Ingredient ]
  *      parameters:
@@ -774,4 +774,48 @@
  *              description: The ingredient is successfully created and pushed into the recipe
  *          400:
  *              description: The ingredient is not created
+ */
+
+/**
+ * @swagger
+ * /ingredient/{id}:
+ *    put:
+ *      summary: Edit an Ingredient by Id
+ *      tags: [ Ingredient ]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The igredient's id edited
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 626444af22513f8bc78f0b16
+ *      requestBody:
+ *        description: The request body needs the number of units, the name of the unit and the name of the ingredient
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  number:
+ *                      type: integer
+ *                      description: The number of units
+ *                      example: 200
+ *                      required: true
+ *                  unit:
+ *                      type: string
+ *                      description: The name of the unit
+ *                      example: grams
+ *                      required: true
+ *                  name:
+ *                      type: string
+ *                      description: The name of the ingredient
+ *                      example: spaghetti
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The ingredient is successfully edited
+ *          400:
+ *              description: The ingredient is not edited
  */

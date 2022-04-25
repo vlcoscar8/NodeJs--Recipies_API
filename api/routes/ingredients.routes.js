@@ -1,5 +1,6 @@
 import Express from "express";
 import {
+    getIngredientById,
     createNewIngredient,
     editIngredient,
     removeIngredient,
@@ -8,6 +9,7 @@ import {
 
 const router = Express.Router();
 
+router.get("/:id", getIngredientById);
 router.post("/:id", createNewIngredient);
 router.put("/:id", editIngredient);
 router.delete("/:id", removeIngredient);

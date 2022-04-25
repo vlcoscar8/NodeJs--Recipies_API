@@ -1,6 +1,18 @@
 import { Ingredient } from "../model/ingredientsSchema.js";
 import { Recipe } from "../model/recipeSchema.js";
 
+const getIngredientById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const ingredient = await Ingredient.findById(id);
+
+        res.status(200).json(ingredient);
+    } catch (error) {
+        return next(error);
+    }
+};
+
 const createNewIngredient = async (req, res, next) => {
     try {
         const bodyIngredient = req.body;
@@ -74,6 +86,7 @@ const removeIngredientFromRecipe = async (req, res, next) => {
 };
 
 export {
+    getIngredientById,
     createNewIngredient,
     editIngredient,
     removeIngredient,
