@@ -1269,3 +1269,128 @@
  *          400:
  *              description: The user is not removed from the recipe
  */
+
+/**
+ * @swagger
+ * /comments/{id}:
+ *    post:
+ *      summary: Create a Comment and put into a Recipe
+ *      tags: [ Comment ]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The recipe's id where the comment will be pushed
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 62663b435cd516f42bc22de8
+ *      requestBody:
+ *        description: The request body needs the content of the commentary
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  content:
+ *                      type: string
+ *                      description: The content of the commentary
+ *                      example: This recipe is so nice!
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The commentary is created and succsessfully pushed on a recipe
+ *          400:
+ *              description: The comentary is not created
+ */
+
+/**
+ * @swagger
+ * /comments:
+ *    patch:
+ *      summary: Push an user into a comment
+ *      tags: [ Comment ]
+ *      requestBody:
+ *        description: The request body needs the user's id and the the comment's id where the user is pushed
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  userId:
+ *                      type: string
+ *                      description: The user Id
+ *                      example: 6266804d903cb3fc821c64bc
+ *                      required: true
+ *                  commentId:
+ *                      type: string
+ *                      description: The comment Id
+ *                      example: 6266892118ca9852956a14ef
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The user is successfully pushed into a comment
+ *          400:
+ *              description: The User is not pushed
+ */
+
+/**
+ * @swagger
+ * /comments/{id}:
+ *    delete:
+ *      summary: Delete a commentary
+ *      tags: [ Comment ]
+ *      operationId: deleteComment
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The commentary's id that needs to be deleted
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 6266892118ca9852956a14ef
+ *      responses:
+ *          200:
+ *              description: The commentary has been deleted
+ *              content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    $ref: #/components/schema/Comment
+ *          400:
+ *              description: Commentary not found
+ */
+
+/**
+ * @swagger
+ * /comments:
+ *    delete:
+ *      summary: Remove a commentary from a Recipe
+ *      tags: [ Comment ]
+ *      requestBody:
+ *        description: The request body needs the comment's id and the the recipe's id where the comment is removed
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  commentId:
+ *                      type: string
+ *                      description: The comment Id
+ *                      example: 6266892118ca9852956a14ef
+ *                      required: true
+ *                  recipeId:
+ *                      type: string
+ *                      description: The recipe Id
+ *                      example: 6266892118ca9852956a14ef
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The user is successfully pushed into a comment
+ *          400:
+ *              description: The User is not pushed
+ */
