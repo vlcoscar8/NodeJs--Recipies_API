@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 
 const isAuth = (req, res, next) => {
     const authorization = req.headers.authorization;
-    console.log(req.headers);
 
     if (!authorization) {
         return res.status(401).json({
@@ -13,7 +12,6 @@ const isAuth = (req, res, next) => {
     }
 
     const [bearerString, bearerToken] = authorization.split(" ");
-    console.log(bearerString);
 
     if (bearerString !== "Bearer") {
         return res.status(400).json({

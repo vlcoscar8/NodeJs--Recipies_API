@@ -1,5 +1,5 @@
 import Express from "express";
-import { isAuth } from "../../middleware/authJWT.js";
+import { isAuth } from "../../middleware/jwt.js";
 import { upload, uploadToCloudinary } from "../../middleware/uploadCloud.js";
 import {
     getUserList,
