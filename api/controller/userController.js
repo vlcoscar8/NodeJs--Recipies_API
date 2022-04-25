@@ -70,7 +70,7 @@ const logInUser = async (req, res, next) => {
             {
                 id: user._id,
                 email: user.email,
-                rol: "user",
+                rol: "ADMIN",
             },
             req.app.get("secretKey"),
             { expiresIn: "1h" }

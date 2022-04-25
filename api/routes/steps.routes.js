@@ -1,4 +1,5 @@
 import Express from "express";
+import { isAuth } from "../../middleware/authJWT.js";
 import {
     createNewStep,
     editStep,
@@ -8,9 +9,9 @@ import {
 
 const router = Express.Router();
 
-router.post("/:id", createNewStep);
-router.put("/:id", editStep);
-router.delete("/:id", removeStep);
-router.delete("/", removeStepFromRecipe);
+router.post("/:id", [isAuth], createNewStep);
+router.put("/:id", [isAuth], editStep);
+router.delete("/:id", [isAuth], removeStep);
+router.delete("/", [isAuth], removeStepFromRecipe);
 
 export { router as stepRouter };

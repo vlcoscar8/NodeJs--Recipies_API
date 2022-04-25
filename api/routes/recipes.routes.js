@@ -1,4 +1,5 @@
 import Express from "express";
+import { isAuth } from "../../middleware/authJWT.js";
 import { upload, uploadToCloudinary } from "../../middleware/uploadCloud.js";
 import {
     getRecipesList,
@@ -12,8 +13,16 @@ const router = Express.Router();
 
 router.get("/", getRecipesList);
 router.get("/:id", getRecipeDetail);
-router.post("/", [upload.single("img"), uploadToCloudinary], postNewRecipe);
-router.put("/:id", [upload.single("img")], editRecipe);
-router.delete("/:id", removeRecipe);
+router.post(
+    "/",
+    [upload.single("img"), uploadToCloudinary, isAuth],
+    postNewRecipe
+);
+router.put(
+    "/:id",
+    [upload.single("img"), uploadToCloudinary, isAuth],
+    editRecipe
+);
+router.delete("/:id", [isAuth], removeRecipe);
 
 export { router as recipeRouter };

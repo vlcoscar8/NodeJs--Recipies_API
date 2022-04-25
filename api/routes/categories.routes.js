@@ -1,4 +1,5 @@
 import Express from "express";
+import { isAuth } from "../../middleware/authJWT.js";
 import {
     getRecipeCategoriesList,
     getCategoryDetail,
@@ -13,10 +14,10 @@ const router = Express.Router();
 
 router.get("/", getRecipeCategoriesList);
 router.get("/:id", getCategoryDetail);
-router.post("/", postNewCategoryRecipe);
-router.patch("/", pushRecipeIntoCategoryRecipe);
-router.patch("/food", pushCategoryRecipeIntoFood);
-router.delete("/:id", removeCategoryRecipe);
-router.delete("/", removeRecipeFromCategory);
+router.post("/", [isAuth], postNewCategoryRecipe);
+router.patch("/", [isAuth], pushRecipeIntoCategoryRecipe);
+router.patch("/food", [isAuth], pushCategoryRecipeIntoFood);
+router.delete("/:id", [isAuth], removeCategoryRecipe);
+router.delete("/", [isAuth], removeRecipeFromCategory);
 
 export { router as categoriesRouter };

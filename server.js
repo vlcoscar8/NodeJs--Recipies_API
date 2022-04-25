@@ -80,7 +80,6 @@ server.use("*", (req, res, next) => {
     error.status = 404;
     next(error);
 });
-
 server.use((error, req, res, next) => {
     return res
         .status(error.status || 500)

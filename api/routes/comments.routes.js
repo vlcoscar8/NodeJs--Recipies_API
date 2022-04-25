@@ -1,4 +1,5 @@
 import Express from "express";
+import { isAuth } from "../../middleware/authJWT.js";
 import {
     createComment,
     pushUserIntoComment,
@@ -8,9 +9,9 @@ import {
 
 const router = Express.Router();
 
-router.post("/:id", createComment);
-router.patch("/", pushUserIntoComment);
-router.delete("/:id", removeComment);
-router.delete("/", removeCommentfromRecipe);
+router.post("/:id", [isAuth], createComment);
+router.patch("/", [isAuth], pushUserIntoComment);
+router.delete("/:id", [isAuth], removeComment);
+router.delete("/", [isAuth], removeCommentfromRecipe);
 
 export { router as commentsRouter };
