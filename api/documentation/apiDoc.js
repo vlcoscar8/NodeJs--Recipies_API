@@ -735,6 +735,27 @@
 /**
  * @swagger
  * /ingredient/{id}:
+ *    get:
+ *      summary: Get ingredient detail
+ *      tags: [ Ingredient ]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The igredient's id
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 626444af22513f8bc78f0b16
+ *      responses:
+ *          200:
+ *              description: The ingredient is successfully edited
+ *          400:
+ *              description: The ingredient is not edited
+ */
+
+/**
+ * @swagger
+ * /ingredient/{id}:
  *    post:
  *      summary: Create an Ingredient and push into a recipe by Id
  *      tags: [ Ingredient ]
@@ -818,4 +839,62 @@
  *              description: The ingredient is successfully edited
  *          400:
  *              description: The ingredient is not edited
+ */
+
+/**
+ * @swagger
+ * /ingredient/{id}:
+ *    delete:
+ *      summary: Delete an ingredient
+ *      tags: [ Ingredient ]
+ *      operationId: deleteIngredient
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The ingredient's id that needs to be deleted
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 626444af22513f8bc78f0b16
+ *      responses:
+ *          200:
+ *              description: The ingredient has been deleted
+ *              content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    $ref: #/components/schema/Ingredient
+ *          400:
+ *              description: Ingredient not found
+ */
+
+/**
+ * @swagger
+ * /ingredient:
+ *    delete:
+ *      summary: Remove an Ingredient from a Recipe
+ *      tags: [ Ingredient ]
+ *      requestBody:
+ *        description: The request body needs the ingredient id and the recipe id
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  ingredientId:
+ *                      type: string
+ *                      description: The ingredient's id to be removed
+ *                      required: true
+ *                  recipeId:
+ *                      type: string
+ *                      description: The recime's id where the ingredient is removed
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The ingredient is successfully removed from the recipe
+ *          400:
+ *              description: The ingredient is not removed from the recipe
  */
