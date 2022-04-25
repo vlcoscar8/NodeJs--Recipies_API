@@ -12,6 +12,7 @@ const getFoodList = async (req, res, next) => {
                     mainFoodList.indexOf(food) >= start &&
                     mainFoodList.indexOf(food) < limit
             );
+
             return res.status(200).json(filteredFoodList);
         }
 
@@ -36,8 +37,14 @@ const getFoodDetail = async (req, res, next) => {
 const postNewFood = async (req, res, next) => {
     try {
         const body = req.body;
+        const image = req.file_url;
 
-        const newFood = new Food(body);
+        console.log(body);
+
+        const newFood = new Food({
+            name: body.foodName,
+            img: image,
+        });
 
         await newFood.save();
 
@@ -51,10 +58,12 @@ const editFood = async (req, res, next) => {
     try {
         const newBody = req.body;
         const { id } = req.params;
+        const image = req.file_url;
 
         const newFood = new Food({
             _id: id,
-            ...newBody,
+            img: image,
+            name: newBody.foodName,
         });
 
         await Food.findByIdAndUpdate(id, newFood);
@@ -67,14 +76,16 @@ const editFood = async (req, res, next) => {
 
 const patchFood = async (req, res, next) => {
     try {
-        const { id, name, img } = req.body;
+        const { id } = req.body;
 
-        const obj = {
-            ...(name && { name: name }),
-            ...(img && { img: img }),
-        };
+        const image = req.file_url;
 
-        await Food.findByIdAndUpdate({ _id: id }, obj);
+        await Food.findByIdAndUpdate(
+            { _id: id },
+            {
+                img: image,
+            }
+        );
         const updatedFood = await Food.findById(id);
 
         res.status(200).json(updatedFood);

@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cors from "cors";
+import swaggerUi from "swagger-ui-express";
+import swaggerJsDoc from "swagger-jsdoc";
 import { connectionDB } from "./config/db.js";
 import { DB_URL } from "./config/db.js";
 import { foodRouter } from "./api/routes/food.routes.js";
@@ -40,6 +42,23 @@ server.use(
     })
 );
 
+//Swagger
+const swaggerSpec = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "Recipes API - NodeJS, Express & Mongo",
+            version: "1.0.0",
+        },
+        servers: [
+            {
+                url: `http://localhost:${PORT}`, // The URL of the api
+            },
+        ],
+    },
+    apis: [`./api/documentation/*.js`], // The file where the documentation is written
+};
+
 //Router
 server.use("/", router);
 server.use("/food", foodRouter);
@@ -49,6 +68,11 @@ server.use("/ingredient", ingredientRouter);
 server.use("/step", stepRouter);
 server.use("/user", userRouter);
 server.use("/comments", commentsRouter);
+server.use(
+    "/api-doc",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerJsDoc(swaggerSpec))
+);
 
 // Errors
 server.use("*", (req, res, next) => {

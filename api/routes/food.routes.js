@@ -1,4 +1,5 @@
 import Express from "express";
+import { upload, uploadToCloudinary } from "../../middleware/uploadCloud.js";
 import {
     getFoodList,
     getFoodDetail,
@@ -12,9 +13,9 @@ const router = Express.Router();
 
 router.get("/", getFoodList);
 router.get("/:id", getFoodDetail);
-router.post("/", postNewFood);
-router.put("/:id", editFood);
-router.patch("/", patchFood);
+router.post("/", [upload.single("img"), uploadToCloudinary], postNewFood);
+router.put("/:id", [upload.single("img"), uploadToCloudinary], editFood);
+router.patch("/", [upload.single("img"), uploadToCloudinary], patchFood);
 router.delete("/:id", deleteFood);
 
 export { router as foodRouter };
