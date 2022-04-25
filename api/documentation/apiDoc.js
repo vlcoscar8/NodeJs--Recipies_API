@@ -156,6 +156,24 @@
 
 /**
  * @swagger
+ *  components:
+ *    securitySchemes:
+ *      bearerAuth:
+ *        type: http
+ *        scheme: bearer
+ *        bearerFormat: JWT
+ *    security:
+ *       -JWT: []
+ *    securityDefinitions:
+ *        JWT:
+ *          type: apiKey
+ *          in: header
+ *          name: access_token
+ *
+ */
+
+/**
+ * @swagger
  *  tags:
  *    - name: Food
  *      description: The Food routes
@@ -235,6 +253,8 @@
  *      tags: [ Food ]
  *      consumes:
  *        - multipart/form-data
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *          content:
  *            multipart/form-data:
@@ -265,6 +285,8 @@
  *      tags: [ Food ]
  *      produces:
  *        - application/json
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -303,6 +325,8 @@
  *        - multipart/form-data
  *      produces:
  *        - application/json
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *          content:
  *            multipart/form-data:
@@ -333,6 +357,8 @@
  *      operationId: deleteFood
  *      produces:
  *        - application/json
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -359,6 +385,8 @@
  *    delete:
  *      summary: Remove a Category from a Food family
  *      tags: [ Food ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the category id and the food family id
  *        required: true
@@ -422,6 +450,8 @@
  *    post:
  *      summary: Create new Recipe category
  *      tags: [ RecipeCategory ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: Insert the body of the new category
  *        required: true
@@ -442,6 +472,8 @@
  *    patch:
  *      summary: Push a Recipe into a Category
  *      tags: [ RecipeCategory ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the recipe id and the category id where the recipe is pushed
  *        required: true
@@ -471,6 +503,8 @@
  *    patch:
  *      summary: Push a Category into a Food family
  *      tags: [ RecipeCategory ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the category id and the food family id where the category is pushed
  *        required: true
@@ -501,6 +535,8 @@
  *      summary: Delete a Recipe Category
  *      tags: [ RecipeCategory ]
  *      operationId: deleteCategory
+ *      security:
+ *        - bearerAuth: []
  *      produces:
  *        - application/json
  *      parameters:
@@ -529,6 +565,8 @@
  *    delete:
  *      summary: Remove a Recipe from a Category
  *      tags: [ RecipeCategory ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the recipe id and the category id
  *        required: true
@@ -631,6 +669,8 @@
  *      tags: [ Recipe ]
  *      consumes:
  *        - multipart/form-data
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *          content:
  *            multipart/form-data:
@@ -686,6 +726,8 @@
  *      summary: Update a recipe
  *      operationId: updateRecipe
  *      tags: [ Recipe ]
+ *      security:
+ *        - bearerAuth: []
  *      produces:
  *        - application/json
  *      parameters:
@@ -753,6 +795,8 @@
  *      operationId: deleteRecipe
  *      produces:
  *        - application/json
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -800,6 +844,8 @@
  *    post:
  *      summary: Create an Ingredient and push into a recipe by Id
  *      tags: [ Ingredient ]
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -844,6 +890,8 @@
  *    put:
  *      summary: Edit an Ingredient by Id
  *      tags: [ Ingredient ]
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -891,6 +939,8 @@
  *      operationId: deleteIngredient
  *      produces:
  *        - application/json
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -917,6 +967,8 @@
  *    delete:
  *      summary: Remove an Ingredient from a Recipe
  *      tags: [ Ingredient ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the ingredient id and the recipe id
  *        required: true
@@ -946,6 +998,8 @@
  *    post:
  *      summary: Create an Step and push into a recipe by Id
  *      tags: [ Step ]
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -985,6 +1039,8 @@
  *    put:
  *      summary: Edit an Step
  *      tags: [ Step ]
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -1027,6 +1083,8 @@
  *      operationId: deleteStep
  *      produces:
  *        - application/json
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -1053,6 +1111,8 @@
  *    delete:
  *      summary: Remove a Step from a Recipe
  *      tags: [ Step ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the step id and the recipe id
  *        required: true
@@ -1124,6 +1184,8 @@
  *    post:
  *      summary: Register an User
  *      tags: [ User ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the email, the password and the username
  *        required: true
@@ -1160,6 +1222,8 @@
  *    post:
  *      summary: Login an User
  *      tags: [ User ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the email, the password
  *        required: true
@@ -1191,6 +1255,8 @@
  *    post:
  *      summary: Logout an User
  *      tags: [ User ]
+ *      security:
+ *        - bearerAuth: []
  *      responses:
  *          200:
  *              description: The User is successfully logged out
@@ -1204,6 +1270,8 @@
  *    post:
  *      summary: Push an User into a recipe
  *      tags: [ User ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the user's id and the the recipe's id where the user is pushed
  *        required: true
@@ -1239,6 +1307,8 @@
  *        - multipart/form-data
  *      produces:
  *        - application/json
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -1286,6 +1356,8 @@
  *    delete:
  *      summary: Remove a user from a Recipe
  *      tags: [ User ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the user id and the recipe id
  *        required: true
@@ -1317,6 +1389,8 @@
  *    post:
  *      summary: Create a Comment and put into a Recipe
  *      tags: [ Comment ]
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -1351,6 +1425,8 @@
  *    patch:
  *      summary: Push an user into a comment
  *      tags: [ Comment ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the user's id and the the comment's id where the user is pushed
  *        required: true
@@ -1385,6 +1461,8 @@
  *      operationId: deleteComment
  *      produces:
  *        - application/json
+ *      security:
+ *        - bearerAuth: []
  *      parameters:
  *        - in: path
  *          name: id
@@ -1411,6 +1489,8 @@
  *    delete:
  *      summary: Remove a commentary from a Recipe
  *      tags: [ Comment ]
+ *      security:
+ *        - bearerAuth: []
  *      requestBody:
  *        description: The request body needs the comment's id and the the recipe's id where the comment is removed
  *        required: true
