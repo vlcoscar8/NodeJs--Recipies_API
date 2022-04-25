@@ -7,6 +7,7 @@ import {
     pushCategoryRecipeIntoFood,
     removeCategoryRecipe,
     removeRecipeFromCategory,
+    removeCategoryFromFood,
 } from "../controller/categoriesController.js";
 
 const router = Express.Router();
@@ -18,5 +19,6 @@ router.patch("/", pushRecipeIntoCategoryRecipe);
 router.patch("/food", pushCategoryRecipeIntoFood);
 router.delete("/:id", removeCategoryRecipe);
 router.delete("/", removeRecipeFromCategory);
+router.delete("/food", removeCategoryFromFood);
 
 export { router as categoriesRouter };
