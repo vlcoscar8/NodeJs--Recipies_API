@@ -9,52 +9,52 @@ const foodSeed = [
     {
         name: "Italian Food",
         img: "https://res.cloudinary.com/oscar-perez/image/upload/v1650728474/RecipeAssets/FoodCategory/italianFood_lkz9uo.jpg",
-        recipes: [],
+        categories: [],
     },
     {
         name: "Japanese Food",
         img: "https://res.cloudinary.com/oscar-perez/image/upload/v1650728474/RecipeAssets/FoodCategory/japaneseFood_cfd61m.jpg",
-        recipes: [],
+        categories: [],
     },
     {
         name: "Mexican Food",
         img: "https://res.cloudinary.com/oscar-perez/image/upload/v1650728473/RecipeAssets/FoodCategory/mexicanFood_uzfuzz.jpg",
-        recipes: [],
+        categories: [],
     },
     {
         name: "Spanish Food",
         img: "https://res.cloudinary.com/oscar-perez/image/upload/v1650728474/RecipeAssets/FoodCategory/spanishFood_ft3fys.jpg",
-        recipes: [],
+        categories: [],
     },
     {
         name: "Indian Food",
         img: "https://res.cloudinary.com/oscar-perez/image/upload/v1650728473/RecipeAssets/FoodCategory/indianFood_hotdnf.jpg",
-        recipes: [],
+        categories: [],
     },
     {
         name: "Chinese Food",
         img: "https://res.cloudinary.com/oscar-perez/image/upload/v1650728473/RecipeAssets/FoodCategory/chineseFood_ueg7hc.jpg",
-        recipes: [],
+        categories: [],
     },
     {
         name: "French Food",
         img: "https://res.cloudinary.com/oscar-perez/image/upload/v1650728473/RecipeAssets/FoodCategory/frenchFood_g8ezjk.jpg",
-        recipes: [],
+        categories: [],
     },
     {
         name: "American Food",
         img: "https://res.cloudinary.com/oscar-perez/image/upload/v1650728472/RecipeAssets/FoodCategory/AmericanFood_rqe4mm.jpg",
-        recipes: [],
+        categories: [],
     },
     {
         name: "Vegan Food",
         img: "https://res.cloudinary.com/oscar-perez/image/upload/v1650728474/RecipeAssets/FoodCategory/VeganFood_vpt78b.jpg",
-        recipes: [],
+        categories: [],
     },
     {
         name: "Nordic Food",
         img: "https://res.cloudinary.com/oscar-perez/image/upload/v1650728475/RecipeAssets/FoodCategory/nordicFood_crwegt.jpg",
-        recipes: [],
+        categories: [],
     },
 ];
 

@@ -467,13 +467,42 @@
  *            schema:
  *              type: object
  *              properties:
+ *                  recipeId:
+ *                      type: string
+ *                      description: The recipe's id to be removed
+ *                      required: true
  *                  categoryId:
  *                      type: string
- *                      description: The recipe's id to be pushed
+ *                      description: The category's id where the recipe is removed
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The recipe is successfully removed from the category
+ *          400:
+ *              description: The recipe is not removed from the category
+ */
+
+/**
+ * @swagger
+ * /categories/food:
+ *    delete:
+ *      summary: Remove a Category from a Food family
+ *      tags: [ RecipeCategory ]
+ *      requestBody:
+ *        description: The request body needs the category id and the food family id
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  categoryId:
+ *                      type: string
+ *                      description: The category's id to be removes
  *                      required: true
  *                  foodId:
  *                      type: string
- *                      description: The category's id where the recipe is removes
+ *                      description: The food's id where the category is removed
  *                      required: true
  *      responses:
  *          200:
@@ -604,7 +633,145 @@
  *                    description: The number of people the recipe is intended
  *      responses:
  *          200:
- *              description: The food has been created
+ *              description: The recipe has been created
  *          400:
- *              description: Food not found
+ *              description: Recipe not found
+ */
+
+/**
+ * @swagger
+ * /recipes/{id}:
+ *    put:
+ *      summary: Update a recipe
+ *      operationId: updateRecipe
+ *      tags: [ Recipe ]
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The recipe id that needs to be updated
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 62662bf9c4e9463db1eaaabf
+ *      requestBody:
+ *          content:
+ *            multipart/form-data:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  title:
+ *                    type: string
+ *                    required: true
+ *                    description: The new recipe title
+ *                  food:
+ *                    type: string
+ *                    required: true
+ *                    description: The food family where the recipe is related
+ *                    enum: [ italian, japanese, mexican, spanish, indian, chinese, french, american, vegan, nordic ]
+ *                  category:
+ *                    type: string
+ *                    required: true
+ *                    description: The category where the recipe is related
+ *                    example: Pasta
+ *                  img:
+ *                    type: file
+ *                    required: true
+ *                    description: The new recipe image file
+ *                  description:
+ *                    type: string
+ *                    required: true
+ *                    description: The recipe description
+ *                  difficulty:
+ *                    type: string
+ *                    required: true
+ *                    description: The recipe difficulty
+ *                    enum: [ easy, medium, hard ]
+ *                  time:
+ *                    type: integer
+ *                    required: true
+ *                    description: The time required to finish the recipe
+ *                  people:
+ *                    type: integer
+ *                    required: true
+ *                    description: The number of people the recipe is intended
+ *      responses:
+ *          200:
+ *              description: The recipe has been updated
+ *          400:
+ *              description: Recipe not found
+ */
+
+/**
+ * @swagger
+ * /recipes/{id}:
+ *    delete:
+ *      summary: Delete a Recipe
+ *      tags: [ Recipe ]
+ *      operationId: deleteRecipe
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The recipe's id that needs to be deleted
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 626444af22513f8bc78f0b16
+ *      responses:
+ *          200:
+ *              description: The recipe has been deleted
+ *              content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    $ref: #/components/schema/Recipe
+ *          400:
+ *              description: Recipe not found
+ */
+
+/**
+ * @swagger
+ * /ingredient/:id:
+ *    patch:
+ *      summary: Create an Ingredient and push into a recipe by Id
+ *      tags: [ Ingredient ]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The recipe's id that include the ingredient created
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 626444af22513f8bc78f0b16
+ *      requestBody:
+ *        description: The request body needs the number of units, the name of the unit and the name of the ingredient
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  number:
+ *                      type: integer
+ *                      description: The number of units
+ *                      example: 200
+ *                      required: true
+ *                  unit:
+ *                      type: string
+ *                      description: The name of the unit
+ *                      example: grams
+ *                      required: true
+ *                  name:
+ *                      type: string
+ *                      description: The name of the ingredient
+ *                      example: spaghetti
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The ingredient is successfully created and pushed into the recipe
+ *          400:
+ *              description: The ingredient is not created
  */

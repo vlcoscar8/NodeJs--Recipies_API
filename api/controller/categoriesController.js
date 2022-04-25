@@ -108,7 +108,7 @@ const removeRecipeFromCategory = async (req, res, next) => {
 const removeCategoryFromFood = async (req, res, next) => {
     try {
         const { categoryId, foodId } = req.body;
-
+        console.log(req.body);
         await Food.findByIdAndUpdate(foodId, {
             $pull: { categories: categoryId },
         });

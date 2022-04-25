@@ -7,7 +7,7 @@ const foodSchema = new Schema({
     img: { type: String, required: true },
     categories: [
         {
-            type: mongoose.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: "RecipeCategory",
         },
     ],
