@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 import { User } from "../model/userSchema.js";
 import { Recipe } from "../model/recipeSchema.js";
 
@@ -65,16 +66,34 @@ const logInUser = async (req, res, next) => {
             return next(error);
         }
 
-        // TOKEN JWT
-        const token = jwt.sign(
-            {
-                id: user._id,
-                email: user.email,
-                rol: "ADMIN",
-            },
-            req.app.get("secretKey"),
-            { expiresIn: "1h" }
-        );
+        // VERIFY IF THE USER IS ADMIN OR NOT
+        const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+        let token;
+
+        if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+            // ADMIN TOKEN JWT
+            token = jwt.sign(
+                {
+                    id: user._id,
+                    email: user.email,
+                    rol: "ADMIN",
+                },
+                req.app.get("secretKey"),
+                { expiresIn: "1h" }
+            );
+        } else {
+            // REGULAR TOKEN JWT
+            token = jwt.sign(
+                {
+                    id: user._id,
+                    email: user.email,
+                    rol: "regular",
+                },
+                req.app.get("secretKey"),
+                { expiresIn: "1h" }
+            );
+        }
 
         // Response
         return res.json({
