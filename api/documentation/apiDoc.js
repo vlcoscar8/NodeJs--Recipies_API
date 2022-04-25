@@ -110,6 +110,47 @@
  *                      type: string
  *                      description: The user's age
  *                      required: false
+ *          Ingredient:
+ *              type: object
+ *              properties:
+ *                  number:
+ *                      type: integer
+ *                      description: The number of units of the ingredient
+ *                      required: true
+ *                  unit:
+ *                      type: string
+ *                      description: The measure unit of the ingredient
+ *                      required: true
+ *                  name:
+ *                      type: string
+ *                      description: The name os the ingredient
+ *                      required: true
+ *          Step:
+ *              type: object
+ *              properties:
+ *                  order:
+ *                      type: integer
+ *                      description: The number order of the step
+ *                      required: true
+ *                  description:
+ *                      type: string
+ *                      description: The description of the step
+ *                      required: true
+ *          Comment:
+ *              type: object
+ *              properties:
+ *                  content:
+ *                      type: string
+ *                      description: The content of the commentary
+ *                      required: true
+ *                  time:
+ *                      type: string
+ *                      description: The time when the commentary was created
+ *                      required: true
+ *                  owner:
+ *                      type: array
+ *                      description: The owner who post the commentary
+ *                      required: true
  *
  */
 
