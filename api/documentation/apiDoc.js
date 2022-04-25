@@ -719,7 +719,7 @@
  *          required: true
  *          schema:
  *              type: string
- *          example: 626444af22513f8bc78f0b16
+ *          example: 62663b435cd516f42bc22de8
  *      responses:
  *          200:
  *              description: The recipe has been deleted
@@ -1033,4 +1033,239 @@
  *              description: The step is successfully removed from the recipe
  *          400:
  *              description: The step is not removed from the recipe
+ */
+
+/**
+ * @swagger
+ * /user:
+ *    get:
+ *      summary: Returns the list of all the users
+ *      tags: [ User ]
+ *      responses:
+ *          200:
+ *              description: The list of users
+ *          400:
+ *              description: Users not found
+ */
+
+/**
+ * @swagger
+ * /user/{id}:
+ *    get:
+ *      summary: Get user by id and show the user detail
+ *      tags: [ User ]
+ *      operationId: detailUser
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The user's id that needs to be showed
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 626678ef19a451e1bea3b19d
+ *      responses:
+ *          200:
+ *              description: The User finded
+ *              content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    $ref: #/components/schema/User
+ *          400:
+ *              description: User not found
+ */
+
+/**
+ * @swagger
+ * /user/register:
+ *    post:
+ *      summary: Register an User
+ *      tags: [ User ]
+ *      requestBody:
+ *        description: The request body needs the email, the password and the username
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  email:
+ *                      type: string
+ *                      description: The email of the user
+ *                      example: emailExample@email.com
+ *                      required: true
+ *                  password:
+ *                      type: string
+ *                      description: The password of the user
+ *                      example: 1234
+ *                      required: true
+ *                  username:
+ *                      type: string
+ *                      description: The username or nickname of the user
+ *                      example: username69
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The User is successfully registered
+ *          400:
+ *              description: The User is not registered
+ */
+
+/**
+ * @swagger
+ * /user/login:
+ *    post:
+ *      summary: Login an User
+ *      tags: [ User ]
+ *      requestBody:
+ *        description: The request body needs the email, the password
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  email:
+ *                      type: string
+ *                      description: The email of the user
+ *                      example: emailExample@email.com
+ *                      required: true
+ *                  password:
+ *                      type: string
+ *                      description: The password of the user
+ *                      example: 1234
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The User is successfully logged
+ *          400:
+ *              description: The User is not registered
+ */
+
+/**
+ * @swagger
+ * /user/logout:
+ *    post:
+ *      summary: Logout an User
+ *      tags: [ User ]
+ *      responses:
+ *          200:
+ *              description: The User is successfully logged out
+ *          400:
+ *              description: The User is not registered
+ */
+
+/**
+ * @swagger
+ * /user/recipe:
+ *    post:
+ *      summary: Push an User into a recipe
+ *      tags: [ User ]
+ *      requestBody:
+ *        description: The request body needs the user's id and the the recipe's id where the user is pushed
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  userId:
+ *                      type: string
+ *                      description: The user Id
+ *                      example: 6266804d903cb3fc821c64bc
+ *                      required: true
+ *                  recipeId:
+ *                      type: string
+ *                      description: The recipe Id
+ *                      example: 62663b435cd516f42bc22de8
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The user is successfully pushed into a recipe
+ *          400:
+ *              description: The User is not pushed
+ */
+
+/**
+ * @swagger
+ * /user/{id}:
+ *    patch:
+ *      summary: Edit the User profile information
+ *      tags: [ User ]
+ *      consumes:
+ *        - multipart/form-data
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The user's id to be edited
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 6266804d903cb3fc821c64bc
+ *      requestBody:
+ *          content:
+ *            multipart/form-data:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  username:
+ *                    type: string
+ *                    required: true
+ *                    description: The username
+ *                  img:
+ *                    type: file
+ *                    required: false
+ *                    description: The image profile
+ *                  name:
+ *                    type: string
+ *                    required: false
+ *                    description: The name of the user
+ *                  surname:
+ *                    type: string
+ *                    required: false
+ *                    description: The surname of the user
+ *                  age:
+ *                    type: integer
+ *                    required: false
+ *                    description: The age of the user
+ *      responses:
+ *          200:
+ *              description: The user is successfully edited
+ *          400:
+ *              description: The user is not edited
+ */
+
+/**
+ * @swagger
+ * /user/recipe:
+ *    delete:
+ *      summary: Remove a user from a Recipe
+ *      tags: [ User ]
+ *      requestBody:
+ *        description: The request body needs the user id and the recipe id
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  userId:
+ *                      type: string
+ *                      description: The user's id to be removed
+ *                      example: 6266804d903cb3fc821c64bc
+ *                      required: true
+ *                  recipeId:
+ *                      type: string
+ *                      description: The recipe's id where the step is removed
+ *                      example: 62663b435cd516f42bc22de8
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The user is successfully removed from the recipe
+ *          400:
+ *              description: The user is not removed from the recipe
  */
