@@ -898,3 +898,139 @@
  *          400:
  *              description: The ingredient is not removed from the recipe
  */
+
+/**
+ * @swagger
+ * /step/{id}:
+ *    post:
+ *      summary: Create an Step and push into a recipe by Id
+ *      tags: [ Step ]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The recipe's id that include the step created
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 626444af22513f8bc78f0b16
+ *      requestBody:
+ *        description: The request body needs the number of the step order and a description
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  order:
+ *                      type: integer
+ *                      description: The number order of the step
+ *                      example: 1
+ *                      required: true
+ *                  description:
+ *                      type: string
+ *                      description: The description of the step
+ *                      example: Boil watter and cut the vegetables
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The step is successfully created and pushed into the recipe
+ *          400:
+ *              description: The step is not created
+ */
+
+/**
+ * @swagger
+ * /step/{id}:
+ *    put:
+ *      summary: Edit an Step
+ *      tags: [ Step ]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The step's id
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 626678ef19a451e1bea3b19d
+ *      requestBody:
+ *        description: The request body needs the number of the step order and a description
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  order:
+ *                      type: integer
+ *                      description: The number order of the step
+ *                      example: 1
+ *                      required: true
+ *                  description:
+ *                      type: string
+ *                      description: The description of the step
+ *                      example: Boil watter and cut the vegetables
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The step is successfully created and pushed into the recipe
+ *          400:
+ *              description: The step is not created
+ */
+
+/**
+ * @swagger
+ * /step/{id}:
+ *    delete:
+ *      summary: Delete an step
+ *      tags: [ Step ]
+ *      operationId: deleteStep
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The step's id that needs to be deleted
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 626678ef19a451e1bea3b19d
+ *      responses:
+ *          200:
+ *              description: The step has been deleted
+ *              content:
+ *                application/json:
+ *                  schema:
+ *                    type: object
+ *                    $ref: #/components/schema/Step
+ *          400:
+ *              description: Step not found
+ */
+
+/**
+ * @swagger
+ * /step:
+ *    delete:
+ *      summary: Remove a Step from a Recipe
+ *      tags: [ Step ]
+ *      requestBody:
+ *        description: The request body needs the step id and the recipe id
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  stepId:
+ *                      type: string
+ *                      description: The step's id to be removed
+ *                      required: true
+ *                  recipeId:
+ *                      type: string
+ *                      description: The recipe's id where the step is removed
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The step is successfully removed from the recipe
+ *          400:
+ *              description: The step is not removed from the recipe
+ */
