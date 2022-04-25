@@ -92,7 +92,6 @@ const removeCategoryRecipe = async (req, res, next) => {
 const removeRecipeFromCategory = async (req, res, next) => {
     try {
         const { recipeId, categoryId } = req.body;
-
         await RecipeCategory.findByIdAndUpdate(categoryId, {
             $pull: { recipes: recipeId },
         });
@@ -100,22 +99,6 @@ const removeRecipeFromCategory = async (req, res, next) => {
         const categoryRecipe = await RecipeCategory.findById(categoryId);
 
         res.status(200).json(categoryRecipe);
-    } catch (error) {
-        return next(error);
-    }
-};
-
-const removeCategoryFromFood = async (req, res, next) => {
-    try {
-        const { categoryId, foodId } = req.body;
-        console.log(req.body);
-        await Food.findByIdAndUpdate(foodId, {
-            $pull: { categories: categoryId },
-        });
-
-        const food = await Food.findById(foodId);
-
-        res.status(200).json(food);
     } catch (error) {
         return next(error);
     }
@@ -129,5 +112,4 @@ export {
     pushCategoryRecipeIntoFood,
     removeCategoryRecipe,
     removeRecipeFromCategory,
-    removeCategoryFromFood,
 };

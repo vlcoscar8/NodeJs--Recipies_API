@@ -109,6 +109,22 @@ const deleteFood = async (req, res, next) => {
     }
 };
 
+const removeCategoryFromFood = async (req, res, next) => {
+    try {
+        const { categoryId, foodId } = req.body;
+
+        await Food.findByIdAndUpdate(foodId, {
+            $pull: { categories: categoryId },
+        });
+
+        const food = await Food.findById(foodId);
+
+        res.status(200).json(food);
+    } catch (error) {
+        return next(error);
+    }
+};
+
 export {
     getFoodList,
     getFoodDetail,
@@ -116,4 +132,5 @@ export {
     editFood,
     patchFood,
     deleteFood,
+    removeCategoryFromFood,
 };
