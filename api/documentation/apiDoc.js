@@ -1,7 +1,7 @@
 /**
  * @swagger
  *  components:
- *      schemas:
+ *      schema:
  *          Food:
  *              type: object
  *              properties:
@@ -361,7 +361,7 @@
  *                application/json:
  *                  schema:
  *                    type: object
- *                    $ref: #/components/schema/Food
+ *                    $ref: '#/components/schema/Food'
  *          400:
  *              description: Food not found
  */
@@ -463,7 +463,7 @@
  *                application/json:
  *                  schema:
  *                    type: object
- *                    $ref: #/components/schema/Recipe
+ *                    $ref: '#/components/schema/Recipe'
  *          400:
  *              description: Recipe not found
  */
@@ -650,7 +650,7 @@
  *                application/json:
  *                  schema:
  *                    type: object
- *                    $ref: #/components/schema/Recipe
+ *                    $ref: '#/components/schema/Recipe'
  *          400:
  *              description: Recipe not found
  */
@@ -825,7 +825,7 @@
  *                application/json:
  *                  schema:
  *                    type: object
- *                    $ref: #/components/schema/Ingredient
+ *                    $ref: '#/components/schema/Ingredient'
  *          400:
  *              description: Ingredient not found
  */
@@ -969,7 +969,7 @@
  *                application/json:
  *                  schema:
  *                    type: object
- *                    $ref: #/components/schema/Step
+ *                    $ref: '#/components/schema/Step'
  *          400:
  *              description: Step not found
  */
@@ -1042,7 +1042,7 @@
  *                application/json:
  *                  schema:
  *                    type: object
- *                    $ref: #/components/schema/User
+ *                    $ref: '#/components/schema/User'
  *          400:
  *              description: User not found
  */
@@ -1347,7 +1347,7 @@
  *                application/json:
  *                  schema:
  *                    type: object
- *                    $ref: #/components/schema/Comment
+ *                    $ref: '#/components/schema/Comment'
  *          400:
  *              description: Commentary not found
  */
