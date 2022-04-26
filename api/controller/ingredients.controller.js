@@ -18,6 +18,18 @@ const createNewIngredient = async (req, res, next) => {
         const bodyIngredient = req.body;
         const { id } = req.params;
 
+        const recipe = await Recipe.findById(id).populate("ingredients");
+        const ingredient = recipe.ingredients.filter((ing) => {
+            console.log(ing.name === bodyIngredient.name);
+            return ing.name === bodyIngredient.name;
+        });
+
+        if (ingredient) {
+            return res
+                .status(400)
+                .json("The ingredient is already included in the recipe");
+        }
+
         const newIngredient = new Ingredient(bodyIngredient);
         await newIngredient.save();
 
