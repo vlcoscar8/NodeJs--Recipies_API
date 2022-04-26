@@ -106,9 +106,9 @@ const removeRecipeFromFood = async (req, res, next) => {
             $pull: { recipes: recipeId },
         });
 
-        const recipeUpdated = await Food.findById(foodId);
+        const updatedFood = await Food.findById(foodId);
 
-        res.status(200).json(recipeUpdated);
+        res.status(200).json(updatedFood);
     } catch (error) {
         return next(error);
     }
