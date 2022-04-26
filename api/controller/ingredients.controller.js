@@ -15,20 +15,20 @@ const getIngredientById = async (req, res, next) => {
 
 const createNewIngredient = async (req, res, next) => {
     try {
-        const bodyIngredient = req.body;
-        const { id } = req.params;
-
-        const recipe = await Recipe.findById(id).populate("ingredients");
+        // CHECK IF THE INGREDIENT IS ALREADY CREATED
         const ingredient = recipe.ingredients.filter((ing) => {
-            console.log(ing.name === bodyIngredient.name);
             return ing.name === bodyIngredient.name;
         });
-
-        if (ingredient) {
+        if (ingredient.length > 0) {
             return res
                 .status(400)
                 .json("The ingredient is already included in the recipe");
         }
+
+        // NEXT
+        const bodyIngredient = req.body;
+        const { id } = req.params;
+        const recipe = await Recipe.findById(id).populate("ingredients");
 
         const newIngredient = new Ingredient(bodyIngredient);
         await newIngredient.save();
@@ -69,29 +69,24 @@ const removeIngredient = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const removedIngredient = await Ingredient.findByIdAndDelete(id);
+        const ing = await Ingredient.findById(id);
+        const recipe = await Recipe.findOne({ ingredients: ing });
+
+        await Recipe.findOneAndUpdate(
+            { ingredients: ing },
+            {
+                $pull: { ingredients: id },
+            }
+        );
+
+        const deletedIng = await Ingredient.findByIdAndDelete(id);
+        const updatedRecipe = await Recipe.findOne({ title: recipe.title });
 
         res.status(200).json({
-            deleted: removedIngredient,
+            status: 200,
+            updated: updatedRecipe,
+            deleted: deletedIng,
         });
-    } catch (error) {
-        return next(error);
-    }
-};
-
-const removeIngredientFromRecipe = async (req, res, next) => {
-    try {
-        const { ingredientId, recipeId } = req.body;
-
-        await Recipe.findByIdAndUpdate(recipeId, {
-            $pull: {
-                ingredients: ingredientId,
-            },
-        });
-
-        const updatedRecipe = await Recipe.findById(recipeId);
-
-        res.status(200).json(updatedRecipe);
     } catch (error) {
         return next(error);
     }
@@ -102,5 +97,4 @@ export {
     createNewIngredient,
     editIngredient,
     removeIngredient,
-    removeIngredientFromRecipe,
 };
