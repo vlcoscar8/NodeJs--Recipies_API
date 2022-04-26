@@ -30,6 +30,7 @@ const registerUser = async (req, res, next) => {
             email: email,
             password: passwordHash,
             username: username,
+            admin: false,
             img: "https://res.cloudinary.com/oscar-perez-romero/image/upload/v1650820243/userImage_an9td7.png",
         });
 
@@ -67,17 +68,15 @@ const logInUser = async (req, res, next) => {
         }
 
         // VERIFY IF THE USER IS ADMIN OR NOT
-        const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
         let token;
 
-        if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        if (user.admin) {
             // ADMIN TOKEN JWT
             token = jwt.sign(
                 {
                     id: user._id,
                     email: user.email,
-                    rol: "ADMIN",
+                    admin: true,
                 },
                 req.app.get("secretKey"),
                 { expiresIn: "1h" }
@@ -88,7 +87,7 @@ const logInUser = async (req, res, next) => {
                 {
                     id: user._id,
                     email: user.email,
-                    rol: "regular",
+                    admin: false,
                 },
                 req.app.get("secretKey"),
                 { expiresIn: "1h" }

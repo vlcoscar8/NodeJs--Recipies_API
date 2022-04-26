@@ -6,7 +6,7 @@ const adminAuth = (req, res, next) => {
 
         let infoToken = jwt.verify(token, req.app.get("secretKey"));
 
-        if (infoToken.rol == "ADMIN") return next();
+        if (infoToken.admin == true) return next();
     }
     return res.status(403).send("Not authorized");
 };
