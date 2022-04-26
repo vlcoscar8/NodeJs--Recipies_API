@@ -8,7 +8,6 @@ import {
     editRecipe,
     pushRecipeIntoFood,
     removeRecipe,
-    removeRecipeFromFood,
 } from "../controller/recipeController.js";
 
 const router = Express.Router();
@@ -27,6 +26,5 @@ router.put(
 );
 router.patch("/food", [isAuth], pushRecipeIntoFood);
 router.delete("/:id", [isAuth], removeRecipe);
-router.delete("/", [isAuth], removeRecipeFromFood);
 
 export { router as recipeRouter };

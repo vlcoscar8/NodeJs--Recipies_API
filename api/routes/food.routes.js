@@ -9,7 +9,6 @@ import {
     editFood,
     patchFood,
     deleteFood,
-    removeCategoryFromFood,
 } from "../controller/foodController.js";
 
 const router = Express.Router();
@@ -32,6 +31,5 @@ router.patch(
     patchFood
 );
 router.delete("/:id", [adminAuth], deleteFood);
-router.delete("/", [adminAuth], removeCategoryFromFood);
 
 export { router as foodRouter };

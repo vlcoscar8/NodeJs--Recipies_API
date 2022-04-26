@@ -104,26 +104,25 @@ const pushRecipeIntoFood = async (req, res, next) => {
 const removeRecipe = async (req, res, next) => {
     try {
         const { id } = req.params;
+
+        const recipe = await Recipe.findById(id);
+        const food = await Food.findOne({ recipes: recipe });
+
+        await Food.findOneAndUpdate(
+            { recipes: recipe },
+            {
+                $pull: { recipes: id },
+            }
+        );
+
         const deletedRecipe = await Recipe.findByIdAndDelete(id);
+        const updatedFood = await Food.findOne({ name: food.name });
 
         res.status(200).json({
+            status: 200,
+            updated: updatedFood,
             deleted: deletedRecipe,
         });
-    } catch (error) {
-        return next(error);
-    }
-};
-
-const removeRecipeFromFood = async (req, res, next) => {
-    try {
-        const { recipeId, foodId } = req.body;
-        await Food.findByIdAndUpdate(foodId, {
-            $pull: { recipes: recipeId },
-        });
-
-        const updatedFood = await Food.findById(foodId);
-
-        res.status(200).json(updatedFood);
     } catch (error) {
         return next(error);
     }
@@ -136,5 +135,4 @@ export {
     pushRecipeIntoFood,
     editRecipe,
     removeRecipe,
-    removeRecipeFromFood,
 };
