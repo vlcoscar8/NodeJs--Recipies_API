@@ -1,4 +1,5 @@
 import { Recipe } from "../model/recipeSchema.js";
+import { Food } from "../model/foodSchema.js";
 
 const getRecipesList = async (req, res, next) => {
     try {
@@ -8,7 +9,7 @@ const getRecipesList = async (req, res, next) => {
             ...(food && { food: food }),
             ...(category && { category: category }),
             ...(difficulty && { difficulty: difficulty }),
-            ...(timeLimit && { $lte: { time: timeLimit } }),
+            ...(timeLimit && { time: { $lte: timeLimit } }),
         };
         const recipesList = await Recipe.find(filterObj);
 
