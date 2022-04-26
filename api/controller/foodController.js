@@ -26,7 +26,7 @@ const getFoodDetail = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const detailFood = await Food.findById(id).populate("categories");
+        const detailFood = await Food.findById(id).populate("recipes");
 
         return res.status(200).json(detailFood);
     } catch (error) {
