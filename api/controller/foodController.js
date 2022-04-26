@@ -60,15 +60,18 @@ const editFood = async (req, res, next) => {
         const { id } = req.params;
         const image = req.file_url;
 
-        const newFood = new Food({
-            _id: id,
-            img: image,
-            name: newBody.foodName,
+        const obj = {
+            ...(image && image),
+            ...(newBody && newBody),
+        };
+
+        await Food.findByIdAndUpdate(id, {
+            ...obj,
         });
 
-        await Food.findByIdAndUpdate(id, newFood);
+        const foodUpdated = await Food.findById(id);
 
-        return res.status(200).json(newFood);
+        return res.status(200).json(foodUpdated);
     } catch (error) {
         return next(error);
     }

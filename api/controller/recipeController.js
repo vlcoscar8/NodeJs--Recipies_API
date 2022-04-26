@@ -25,7 +25,8 @@ const getRecipeDetail = async (req, res, next) => {
 
         const recipe = await Recipe.findById(id)
             .populate("ingredients")
-            .populate("steps");
+            .populate("steps")
+            .populate("comments");
 
         res.status(200).json(recipe);
     } catch (error) {
@@ -54,19 +55,24 @@ const postNewRecipe = async (req, res, next) => {
 const editRecipe = async (req, res, next) => {
     try {
         const newBody = req.body;
+
         const { id } = req.params;
 
         const imageUpdated = req.file_url;
 
-        const newRecipe = new Recipe({
+        const obj = {
+            ...(imageUpdated && imageUpdated),
+            ...(newBody && newBody),
+        };
+
+        await Recipe.findByIdAndUpdate(id, {
             _id: id,
-            img: imageUpdated,
-            ...newBody,
+            ...obj,
         });
 
-        await Recipe.findByIdAndUpdate(id, newRecipe);
+        const editedRecipe = await Recipe.findById(id);
 
-        res.status(200).json(newRecipe);
+        res.status(200).json(editedRecipe);
     } catch (error) {
         return next(error);
     }
