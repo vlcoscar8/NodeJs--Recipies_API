@@ -17,17 +17,6 @@
  *                      type: array
  *                      description: The list of categories inside of the food type
  *                      required: false
- *          RecipeCategory:
- *              type: object
- *              properties:
- *                  title:
- *                      type: string
- *                      description: The category's name
- *                      required: true
- *                  recipes:
- *                      type: array
- *                      description: The list of recipes inside the category
- *                      required: true
  *          Recipe:
  *              type: object
  *              properties:
@@ -177,8 +166,6 @@
  *  tags:
  *    - name: Food
  *      description: The Food routes
- *    - name: RecipeCategory
- *      description: The RecipeCategory routes
  *    - name: Recipe
  *      description: The Recipe routes
  *    - name: User
@@ -412,186 +399,6 @@
 
 /**
  * @swagger
- * /categories:
- *    get:
- *      summary: Returns the category food list
- *      tags: [ RecipeCategory ]
- *      responses:
- *          200:
- *              description: The category food llist
- *          400:
- *              description: Category food not found
- */
-
-/**
- * @swagger
- * /categories/{id}:
- *    get:
- *      summary: Return the recipe category by id
- *      tags: [ RecipeCategory ]
- *      parameters:
- *        - in: path
- *          name: id
- *          description: Return the recipe category by id
- *          required: true
- *          schema:
- *              type: string
- *          example: 62644478921d05d8775a4672
- *      responses:
- *          200:
- *              description: The recipe category by id
- *          400:
- *              description: Recipe category not found
- */
-
-/**
- * @swagger
- * /categories:
- *    post:
- *      summary: Create new Recipe category
- *      tags: [ RecipeCategory ]
- *      security:
- *        - bearerAuth: []
- *      requestBody:
- *        description: Insert the body of the new category
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *                $ref: '#/components/schemas/RecipeCategory'
- *      responses:
- *          200:
- *              description: The RecipeCategory has been posted
- *          400:
- *              description: RecipeCategory not found
- */
-
-/**
- * @swagger
- * /categories:
- *    patch:
- *      summary: Push a Recipe into a Category
- *      tags: [ RecipeCategory ]
- *      security:
- *        - bearerAuth: []
- *      requestBody:
- *        description: The request body needs the recipe id and the category id where the recipe is pushed
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                  recipeId:
- *                      type: string
- *                      description: The recipe's id to be pushed
- *                      required: true
- *                  categoryId:
- *                      type: string
- *                      description: The category's id where the recipe is pushed
- *                      required: true
- *      responses:
- *          200:
- *              description: The recipe is successfully pushed
- *          400:
- *              description: The recipe or the category is not found
- */
-
-/**
- * @swagger
- * /categories/food:
- *    patch:
- *      summary: Push a Category into a Food family
- *      tags: [ RecipeCategory ]
- *      security:
- *        - bearerAuth: []
- *      requestBody:
- *        description: The request body needs the category id and the food family id where the category is pushed
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                  categoryId:
- *                      type: string
- *                      description: The category's id to be pushed
- *                      required: true
- *                  foodId:
- *                      type: string
- *                      description: The food family's id where the category is pushed
- *                      required: true
- *      responses:
- *          200:
- *              description: The category is successfully pushed
- *          400:
- *              description: The category or the food family is not found
- */
-
-/**
- * @swagger
- * /categories/{id}:
- *    delete:
- *      summary: Delete a Recipe Category
- *      tags: [ RecipeCategory ]
- *      operationId: deleteCategory
- *      security:
- *        - bearerAuth: []
- *      produces:
- *        - application/json
- *      parameters:
- *        - in: path
- *          name: id
- *          description: The category's id that needs to be deleted
- *          required: true
- *          schema:
- *              type: string
- *          example: 626444af22513f8bc78f0b16
- *      responses:
- *          200:
- *              description: The category has been deleted
- *              content:
- *                application/json:
- *                  schema:
- *                    type: object
- *                    $ref: #/components/schema/RecipeCategory
- *          400:
- *              description: RecipeCategory not found
- */
-
-/**
- * @swagger
- * /categories:
- *    delete:
- *      summary: Remove a Recipe from a Category
- *      tags: [ RecipeCategory ]
- *      security:
- *        - bearerAuth: []
- *      requestBody:
- *        description: The request body needs the recipe id and the category id
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                  recipeId:
- *                      type: string
- *                      description: The recipe's id to be removed
- *                      required: true
- *                  categoryId:
- *                      type: string
- *                      description: The category's id where the recipe is removed
- *                      required: true
- *      responses:
- *          200:
- *              description: The recipe is successfully removed from the category
- *          400:
- *              description: The recipe is not removed from the category
- */
-
-/**
- * @swagger
  * /recipes:
  *    get:
  *      summary: Returns the list of all the recipes and can be filtered
@@ -788,6 +595,37 @@
 
 /**
  * @swagger
+ * /recipes/food:
+ *    patch:
+ *      summary: Push a Recipe into a Food family
+ *      tags: [ Recipe ]
+ *      security:
+ *        - bearerAuth: []
+ *      requestBody:
+ *        description: The request body needs the recipe id and the food family id where the recipe is pushed
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  recipeId:
+ *                      type: string
+ *                      description: The recipe's id to be pushed
+ *                      required: true
+ *                  foodId:
+ *                      type: string
+ *                      description: The food family's id where the recipe is pushed
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The recipe is successfully pushed
+ *          400:
+ *              description: The recipe or the food family is not found
+ */
+
+/**
+ * @swagger
  * /recipes/{id}:
  *    delete:
  *      summary: Delete a Recipe
@@ -815,6 +653,37 @@
  *                    $ref: #/components/schema/Recipe
  *          400:
  *              description: Recipe not found
+ */
+
+/**
+ * @swagger
+ * /recipes:
+ *    delete:
+ *      summary: Remove a Recipe from a Food Family
+ *      tags: [ Recipe ]
+ *      security:
+ *        - bearerAuth: []
+ *      requestBody:
+ *        description: The request body needs the recipe id and the food id
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  recipeId:
+ *                      type: string
+ *                      description: The recipe's id to be removed
+ *                      required: true
+ *                  foodId:
+ *                      type: string
+ *                      description: The food's id where the recipe is removed
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The recipe is successfully removed from the food
+ *          400:
+ *              description: The recipe is not removed from the food
  */
 
 /**
