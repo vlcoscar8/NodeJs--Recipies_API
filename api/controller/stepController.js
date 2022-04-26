@@ -6,6 +6,18 @@ const createNewStep = async (req, res, next) => {
         const { id } = req.params;
         const bodyStep = req.body;
 
+        // CHECK IF THE STEP ORDER IS ALREADY USED
+        const recipe = await Recipe.findById(id).populate("steps");
+        const step = recipe.steps.filter((stp) => {
+            return stp.order === bodyStep.order;
+        });
+        if (step.length > 0) {
+            return res
+                .status(400)
+                .json("The ingredient is already included in the recipe");
+        }
+
+        // NEXT
         const newStep = new Step(bodyStep);
         newStep.save();
 
@@ -45,32 +57,28 @@ const editStep = async (req, res, next) => {
 const removeStep = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const deletedStep = await Step.findByIdAndDelete(id);
+
+        const step = await Step.findById(id);
+        const recipe = await Recipe.findOne({ steps: step });
+
+        await Recipe.findOneAndUpdate(
+            { steps: step },
+            {
+                $pull: { steps: id },
+            }
+        );
+
+        const deletedStp = await Step.findByIdAndDelete(id);
+        const updatedRecipe = await Recipe.findOne({ title: recipe.title });
 
         res.status(200).json({
-            deleted: deletedStep,
+            status: 200,
+            updated: updatedRecipe,
+            deleted: deletedStp,
         });
     } catch (error) {
         return next(error);
     }
 };
 
-const removeStepFromRecipe = async (req, res, next) => {
-    try {
-        const { stepId, recipeId } = req.body;
-
-        await Recipe.findByIdAndUpdate(recipeId, {
-            $pull: {
-                steps: stepId,
-            },
-        });
-
-        const editedRecipe = await Recipe.findById(recipeId).populate("steps");
-
-        res.status(200).json(editedRecipe);
-    } catch (error) {
-        return next(error);
-    }
-};
-
-export { createNewStep, editStep, removeStep, removeStepFromRecipe };
+export { createNewStep, editStep, removeStep };

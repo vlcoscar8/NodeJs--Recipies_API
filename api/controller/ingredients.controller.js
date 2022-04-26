@@ -17,9 +17,9 @@ const createNewIngredient = async (req, res, next) => {
     try {
         const bodyIngredient = req.body;
         const { id } = req.params;
-        const recipe = await Recipe.findById(id).populate("ingredients");
 
         // CHECK IF THE INGREDIENT IS ALREADY CREATED
+        const recipe = await Recipe.findById(id).populate("ingredients");
         const ingredient = recipe.ingredients.filter((ing) => {
             return ing.name === bodyIngredient.name;
         });
