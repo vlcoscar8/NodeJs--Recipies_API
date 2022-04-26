@@ -71,6 +71,21 @@ const editRecipe = async (req, res, next) => {
     }
 };
 
+const pushRecipeIntoFood = async (req, res, next) => {
+    try {
+        const { recipeId, foodId } = req.body;
+        await Food.findByIdAndUpdate(foodId, {
+            $push: { recipes: recipeId },
+        });
+
+        const updatedFood = await Food.findById(foodId);
+
+        res.status(200).json(updatedFood);
+    } catch (error) {
+        return next(error);
+    }
+};
+
 const removeRecipe = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -84,10 +99,27 @@ const removeRecipe = async (req, res, next) => {
     }
 };
 
+const removeRecipeFromFood = async (req, res, next) => {
+    try {
+        const { recipeId, foodId } = req.body;
+        await Food.findByIdAndUpdate(foodId, {
+            $pull: { recipes: recipeId },
+        });
+
+        const recipeUpdated = await Food.findById(foodId);
+
+        res.status(200).json(recipeUpdated);
+    } catch (error) {
+        return next(error);
+    }
+};
+
 export {
     getRecipesList,
     getRecipeDetail,
     postNewRecipe,
+    pushRecipeIntoFood,
     editRecipe,
     removeRecipe,
+    removeRecipeFromFood,
 };

@@ -6,7 +6,9 @@ import {
     getRecipeDetail,
     postNewRecipe,
     editRecipe,
+    pushRecipeIntoFood,
     removeRecipe,
+    removeRecipeFromFood,
 } from "../controller/recipeController.js";
 
 const router = Express.Router();
@@ -23,6 +25,8 @@ router.put(
     [upload.single("img"), uploadToCloudinary, isAuth],
     editRecipe
 );
+router.patch("/food", [isAuth], pushRecipeIntoFood);
 router.delete("/:id", [isAuth], removeRecipe);
+router.delete("/", [isAuth], removeRecipeFromFood);
 
 export { router as recipeRouter };
