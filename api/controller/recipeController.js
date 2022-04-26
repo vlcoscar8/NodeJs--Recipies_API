@@ -38,6 +38,14 @@ const postNewRecipe = async (req, res, next) => {
     try {
         const body = req.body;
 
+        const recipeSameTitle = await Recipe.find({ title: body.title });
+
+        if (recipeSameTitle) {
+            res.status(400).json(
+                "The title of the recipe already exist, please try with another title"
+            );
+        }
+
         const imageUpdated = req.file_url;
 
         const newRecipe = new Recipe({
