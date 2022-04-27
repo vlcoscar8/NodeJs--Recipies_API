@@ -8,8 +8,10 @@ import {
     logInUser,
     logOutUser,
     pushUserIntoRecipe,
+    pushRecipeIntoUser,
     editUser,
     removeUserFromRecipe,
+    removeRecipeFromUser,
 } from "../controller/userController.js";
 
 const router = Express.Router();
@@ -20,11 +22,13 @@ router.post("/register", registerUser);
 router.post("/login", logInUser);
 router.post("/logout", logOutUser);
 router.post("/recipe", [isAuth], pushUserIntoRecipe);
+router.post("/recipe/owner", [isAuth], pushRecipeIntoUser);
 router.patch(
     "/:id",
     [upload.single("img"), uploadToCloudinary, isAuth],
     editUser
 );
 router.delete("/recipe", [isAuth], removeUserFromRecipe);
+router.delete("/recipe/owner", [isAuth], removeRecipeFromUser);
 
 export { router as userRouter };

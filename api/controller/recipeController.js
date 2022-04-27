@@ -63,9 +63,7 @@ const postNewRecipe = async (req, res, next) => {
 const editRecipe = async (req, res, next) => {
     try {
         const newBody = req.body;
-
         const { id } = req.params;
-
         const imageUpdated = req.file_url;
 
         const obj = {
@@ -74,7 +72,6 @@ const editRecipe = async (req, res, next) => {
         };
 
         await Recipe.findByIdAndUpdate(id, {
-            _id: id,
             ...obj,
         });
 
@@ -108,12 +105,10 @@ const removeRecipe = async (req, res, next) => {
         const recipe = await Recipe.findById(id);
         const food = await Food.findOne({ recipes: recipe });
 
-        await Food.findOneAndUpdate(
-            { recipes: recipe },
-            {
-                $pull: { recipes: id },
-            }
-        );
+        if (!food) {
+            const deletedRecipe = await Recipe.findByIdAndDelete(id);
+            return res.status(200).json(deletedRecipe);
+        }
 
         const deletedRecipe = await Recipe.findByIdAndDelete(id);
         const updatedFood = await Food.findOne({ name: food.name });

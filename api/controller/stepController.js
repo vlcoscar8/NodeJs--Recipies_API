@@ -14,7 +14,7 @@ const createNewStep = async (req, res, next) => {
         if (step.length > 0) {
             return res
                 .status(400)
-                .json("The ingredient is already included in the recipe");
+                .json("The step order is already included in the recipe");
         }
 
         // NEXT
@@ -60,13 +60,6 @@ const removeStep = async (req, res, next) => {
 
         const step = await Step.findById(id);
         const recipe = await Recipe.findOne({ steps: step });
-
-        await Recipe.findOneAndUpdate(
-            { steps: step },
-            {
-                $pull: { steps: id },
-            }
-        );
 
         const deletedStp = await Step.findByIdAndDelete(id);
         const updatedRecipe = await Recipe.findOne({ title: recipe.title });

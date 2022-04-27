@@ -147,6 +147,12 @@ const pushUserIntoRecipe = async (req, res, next) => {
     try {
         const { userId, recipeId } = req.body;
 
+        const recipe = await Recipe.findById(recipeId);
+
+        if (recipe.owner.length > 0) {
+            return res.status(400).json("The recipe has already an owner");
+        }
+
         await Recipe.findByIdAndUpdate(recipeId, {
             $push: {
                 owner: userId,
@@ -156,6 +162,36 @@ const pushUserIntoRecipe = async (req, res, next) => {
         const updatedRecipe = await Recipe.findById(recipeId);
 
         res.status(200).json(updatedRecipe);
+    } catch (error) {
+        return next(error);
+    }
+};
+
+const pushRecipeIntoUser = async (req, res, next) => {
+    try {
+        const { userId, recipeId } = req.body;
+
+        const recipe = await Recipe.findById(recipeId);
+        const owner = await User.findById(userId);
+        console.log(owner.recipes);
+
+        const userRecipe = owner.recipes.filter(
+            (rec) => rec.title === recipe.title
+        );
+
+        if (userRecipe.length > 0) {
+            return res.status(400).json("The user has already the same recipe");
+        }
+
+        await User.findByIdAndUpdate(userId, {
+            $push: {
+                recipes: recipeId,
+            },
+        });
+
+        const updatedUser = await User.findById(userId).populate("recipes");
+
+        res.status(200).json(updatedUser);
     } catch (error) {
         return next(error);
     }
@@ -198,6 +234,24 @@ const removeUserFromRecipe = async (req, res, next) => {
     }
 };
 
+const removeRecipeFromUser = async (req, res, next) => {
+    try {
+        const { userId, recipeId } = req.body;
+
+        await User.findByIdAndUpdate(userId, {
+            $pull: {
+                recipes: recipeId,
+            },
+        });
+
+        const updatedUser = await User.findById(userId);
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        return next(error);
+    }
+};
+
 export {
     getUserList,
     getUserDetail,
@@ -205,6 +259,8 @@ export {
     logInUser,
     logOutUser,
     pushUserIntoRecipe,
+    pushRecipeIntoUser,
     editUser,
     removeUserFromRecipe,
+    removeRecipeFromUser,
 };

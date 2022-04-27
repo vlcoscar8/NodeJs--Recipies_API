@@ -11,6 +11,7 @@ const userSchema = new Schema({
     name: { type: String },
     surname: { type: String },
     age: { type: Number },
+    recipes: [{ type: mongoose.Types.ObjectId, ref: "Recipe" }],
 });
 
 userSchema.set("toJSON", {

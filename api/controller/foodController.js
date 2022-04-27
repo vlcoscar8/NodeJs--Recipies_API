@@ -39,8 +39,6 @@ const postNewFood = async (req, res, next) => {
         const body = req.body;
         const image = req.file_url;
 
-        console.log(body);
-
         const newFood = new Food({
             name: body.foodName,
             img: image,
