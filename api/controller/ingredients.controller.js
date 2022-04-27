@@ -72,6 +72,13 @@ const removeIngredient = async (req, res, next) => {
         const ing = await Ingredient.findById(id);
         const recipe = await Recipe.findOne({ ingredients: ing });
 
+        await Recipe.findOneAndUpdate(
+            { ingredients: ing },
+            {
+                $pull: { ingredients: id },
+            }
+        );
+
         const deletedIng = await Ingredient.findByIdAndDelete(id);
         const updatedRecipe = await Recipe.findOne({ title: recipe.title });
 

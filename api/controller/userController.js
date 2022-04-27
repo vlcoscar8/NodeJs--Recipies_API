@@ -216,6 +216,23 @@ const editUser = async (req, res, next) => {
     }
 };
 
+const editUserRol = async (req, res, next) => {
+    try {
+        const { admin } = req.body;
+        const { id } = req.params;
+
+        await User.findByIdAndUpdate(id, {
+            admin: admin,
+        });
+
+        const updatedUser = await User.findById(id);
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        next(error);
+    }
+};
+
 const removeUserFromRecipe = async (req, res, next) => {
     try {
         const { userId, recipeId } = req.body;
@@ -261,6 +278,7 @@ export {
     pushUserIntoRecipe,
     pushRecipeIntoUser,
     editUser,
+    editUserRol,
     removeUserFromRecipe,
     removeRecipeFromUser,
 };

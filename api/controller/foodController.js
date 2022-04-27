@@ -26,9 +26,31 @@ const getFoodDetail = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const detailFood = await Food.findById(id).populate("recipes");
+        const { value } = req.query;
 
-        return res.status(200).json(detailFood);
+        const food = await Food.findById(id).populate(value ? `${value}` : "");
+
+        if (!food) {
+            return res.status(400).json("The food doesn't exist");
+        }
+
+        const foodObj = Object.values(food)[2];
+        const cleanObj = Object.entries(foodObj);
+
+        cleanObj.forEach((el) =>
+            el[0] === `${value}`
+                ? res.status(200).json({
+                      status: 200,
+                      message:
+                          el[1].length < 1
+                              ? `${value} value is empty`
+                              : `${value} value is successfully filtered`,
+                      data: el[1],
+                  })
+                : ""
+        );
+
+        return res.status(200).json(food);
     } catch (error) {
         return next(error);
     }
@@ -75,26 +97,6 @@ const editFood = async (req, res, next) => {
     }
 };
 
-const patchFood = async (req, res, next) => {
-    try {
-        const { id } = req.body;
-
-        const image = req.file_url;
-
-        await Food.findByIdAndUpdate(
-            { _id: id },
-            {
-                img: image,
-            }
-        );
-        const updatedFood = await Food.findById(id);
-
-        res.status(200).json(updatedFood);
-    } catch (error) {
-        return next(error);
-    }
-};
-
 const deleteFood = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -110,11 +112,4 @@ const deleteFood = async (req, res, next) => {
     }
 };
 
-export {
-    getFoodList,
-    getFoodDetail,
-    postNewFood,
-    editFood,
-    patchFood,
-    deleteFood,
-};
+export { getFoodList, getFoodDetail, postNewFood, editFood, deleteFood };

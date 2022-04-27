@@ -13,6 +13,12 @@ const getRecipesList = async (req, res, next) => {
         };
         const recipesList = await Recipe.find(filterObj);
 
+        console.log(recipesList);
+
+        if (recipesList.length < 1) {
+            return res.status(400).json("The recipe doesn't exist");
+        }
+
         res.status(200).json(recipesList);
     } catch (error) {
         next(error);
@@ -22,26 +28,23 @@ const getRecipesList = async (req, res, next) => {
 const getRecipeDetail = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const filterValue = Object.keys(req.query)[0];
-
-        if (Object.keys(req.query).length > 1) {
-            return res
-                .status(400)
-                .json("Only is possible to filter by one value");
-        }
+        const { value } = req.query;
 
         const recipe = await Recipe.findById(id).populate(
-            filterValue ? `${filterValue}` : ""
+            value ? `${value}` : ""
         );
 
         const recipeObj = Object.values(recipe)[2];
         const cleanObj = Object.entries(recipeObj);
 
         cleanObj.forEach((el) =>
-            el[0] === `${filterValue}`
+            el[0] === `${value}`
                 ? res.status(200).json({
                       status: 200,
-                      message: `${filterValue} value is successfully filtered`,
+                      message:
+                          el[1].length < 1
+                              ? `${value} value is empty`
+                              : `${value} value is successfully filtered`,
                       data: el[1],
                   })
                 : ""
@@ -59,10 +62,12 @@ const postNewRecipe = async (req, res, next) => {
 
         const recipeSameTitle = await Recipe.find({ title: body.title });
 
-        if (recipeSameTitle) {
-            res.status(400).json(
-                "The title of the recipe already exist, please try with another title"
-            );
+        if (recipeSameTitle.length > 0) {
+            return res
+                .status(400)
+                .json(
+                    "The title of the recipe already exist, please try with another title"
+                );
         }
 
         const imageUpdated = req.file_url;
@@ -81,11 +86,22 @@ const postNewRecipe = async (req, res, next) => {
 
 const editRecipe = async (req, res, next) => {
     try {
-        const newBody = req.body;
+        const { title, ...newBody } = req.body;
         const { id } = req.params;
         const imageUpdated = req.file_url;
 
+        const recipeSameTitle = await Recipe.find({ title: title });
+
+        const wrongTitle = () => {
+            return res
+                .status(400)
+                .json(
+                    "The title is already created in other recipe, please choose another one"
+                );
+        };
+
         const obj = {
+            ...(recipeSameTitle.length > 0 ? wrongTitle() : { title: title }),
             ...(imageUpdated && imageUpdated),
             ...(newBody && newBody),
         };
@@ -124,10 +140,12 @@ const removeRecipe = async (req, res, next) => {
         const recipe = await Recipe.findById(id);
         const food = await Food.findOne({ recipes: recipe });
 
-        if (!food) {
-            const deletedRecipe = await Recipe.findByIdAndDelete(id);
-            return res.status(200).json(deletedRecipe);
-        }
+        await Food.findOneAndUpdate(
+            { recipes: recipe },
+            {
+                $pull: { recipes: id },
+            }
+        );
 
         const deletedRecipe = await Recipe.findByIdAndDelete(id);
         const updatedFood = await Food.findOne({ name: food.name });

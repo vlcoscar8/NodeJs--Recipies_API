@@ -61,13 +61,22 @@ const removeStep = async (req, res, next) => {
         const step = await Step.findById(id);
         const recipe = await Recipe.findOne({ steps: step });
 
-        const deletedStp = await Step.findByIdAndDelete(id);
+        await Recipe.findByIdAndUpdate(
+            { steps: step },
+            {
+                $pull: {
+                    steps: id,
+                },
+            }
+        );
+
+        const deletedStep = await Step.findByIdAndDelete(id);
         const updatedRecipe = await Recipe.findOne({ title: recipe.title });
 
         res.status(200).json({
             status: 200,
             updated: updatedRecipe,
-            deleted: deletedStp,
+            deleted: deletedStep,
         });
     } catch (error) {
         return next(error);

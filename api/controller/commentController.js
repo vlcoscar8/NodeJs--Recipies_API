@@ -51,6 +51,15 @@ const removeComment = async (req, res, next) => {
         const comment = await Comment.findById(id);
         const recipe = await Recipe.findOne({ comments: comment });
 
+        await Recipe.findByIdAndUpdate(
+            { comments: comment },
+            {
+                $pull: {
+                    coments: id,
+                },
+            }
+        );
+
         const deletedComment = await Comment.findByIdAndDelete(id);
         const updatedRecipe = await Recipe.findOne({ title: recipe.title });
 

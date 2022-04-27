@@ -1,5 +1,6 @@
 import Express from "express";
 import { isAuth } from "../../middleware/jwt.js";
+import { adminAuth } from "../../middleware/authToken.js";
 import { upload, uploadToCloudinary } from "../../middleware/uploadCloud.js";
 import {
     getUserList,
@@ -10,6 +11,7 @@ import {
     pushUserIntoRecipe,
     pushRecipeIntoUser,
     editUser,
+    editUserRol,
     removeUserFromRecipe,
     removeRecipeFromUser,
 } from "../controller/userController.js";
@@ -28,6 +30,7 @@ router.patch(
     [upload.single("img"), uploadToCloudinary, isAuth],
     editUser
 );
+router.patch("/admin/:id", [isAuth], editUserRol);
 router.delete("/recipe", [isAuth], removeUserFromRecipe);
 router.delete("/recipe/owner", [isAuth], removeRecipeFromUser);
 

@@ -7,7 +7,6 @@ import {
     getFoodDetail,
     postNewFood,
     editFood,
-    patchFood,
     deleteFood,
 } from "../controller/foodController.js";
 
@@ -24,11 +23,6 @@ router.put(
     "/:id",
     [upload.single("img"), uploadToCloudinary, adminAuth],
     editFood
-);
-router.patch(
-    "/",
-    [upload.single("img"), uploadToCloudinary, adminAuth],
-    patchFood
 );
 router.delete("/:id", [adminAuth], deleteFood);
 
