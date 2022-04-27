@@ -218,6 +218,13 @@
  *      summary: Return the food by id
  *      tags: [ Food ]
  *      parameters:
+ *        - in: query
+ *          name: value
+ *          description: The name value to filter the food
+ *          required: false
+ *          schema:
+ *              type: string
+ *              enum: [recipes]
  *        - in: path
  *          name: id
  *          description: Return the food by id
@@ -303,40 +310,6 @@
 
 /**
  * @swagger
- * /food:
- *    patch:
- *      summary: Uploads an image of the Food family
- *      operationId: UploadFile
- *      tags: [ Food ]
- *      consumes:
- *        - multipart/form-data
- *      produces:
- *        - application/json
- *      security:
- *        - bearerAuth: []
- *      requestBody:
- *          content:
- *            multipart/form-data:
- *              schema:
- *                type: object
- *                properties:
- *                  id:
- *                    type: string
- *                    required: true
- *                    description: The food family id to be patched
- *                  img:
- *                    type: file
- *                    required: true
- *                    description: The new food family image to be uploaded
- *      responses:
- *          200:
- *              description: The food has been created
- *          400:
- *              description: Food not found
- */
-
-/**
- * @swagger
  * /food/{id}:
  *    delete:
  *      summary: Delete a food family
@@ -364,37 +337,6 @@
  *                    $ref: '#/components/schema/Food'
  *          400:
  *              description: Food not found
- */
-
-/**
- * @swagger
- * /food:
- *    delete:
- *      summary: Remove a Category from a Food family
- *      tags: [ Food ]
- *      security:
- *        - bearerAuth: []
- *      requestBody:
- *        description: The request body needs the category id and the food family id
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                  categoryId:
- *                      type: string
- *                      description: The category's id to be removes
- *                      required: true
- *                  foodId:
- *                      type: string
- *                      description: The food's id where the category is removed
- *                      required: true
- *      responses:
- *          200:
- *              description: The recipe is successfully removed from the category
- *          400:
- *              description: The recipe is not removed from the category
  */
 
 /**
@@ -449,6 +391,13 @@
  *      produces:
  *        - application/json
  *      parameters:
+ *        - in: query
+ *          name: value
+ *          description: The value to filter the recipe
+ *          required: false
+ *          schema:
+ *              type: string
+ *              enum: [ingredients, steps, comments]
  *        - in: path
  *          name: id
  *          description: The recipe's id
@@ -628,7 +577,7 @@
  * @swagger
  * /recipes/{id}:
  *    delete:
- *      summary: Delete a Recipe
+ *      summary: Delete a Recipe and remove from Food family and User
  *      tags: [ Recipe ]
  *      operationId: deleteRecipe
  *      produces:
@@ -653,37 +602,6 @@
  *                    $ref: '#/components/schema/Recipe'
  *          400:
  *              description: Recipe not found
- */
-
-/**
- * @swagger
- * /recipes:
- *    delete:
- *      summary: Remove a Recipe from a Food Family
- *      tags: [ Recipe ]
- *      security:
- *        - bearerAuth: []
- *      requestBody:
- *        description: The request body needs the recipe id and the food id
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                  recipeId:
- *                      type: string
- *                      description: The recipe's id to be removed
- *                      required: true
- *                  foodId:
- *                      type: string
- *                      description: The food's id where the recipe is removed
- *                      required: true
- *      responses:
- *          200:
- *              description: The recipe is successfully removed from the food
- *          400:
- *              description: The recipe is not removed from the food
  */
 
 /**
@@ -803,7 +721,7 @@
  * @swagger
  * /ingredient/{id}:
  *    delete:
- *      summary: Delete an ingredient
+ *      summary: Delete an ingredient and remove from the recipe
  *      tags: [ Ingredient ]
  *      operationId: deleteIngredient
  *      produces:
@@ -828,37 +746,6 @@
  *                    $ref: '#/components/schema/Ingredient'
  *          400:
  *              description: Ingredient not found
- */
-
-/**
- * @swagger
- * /ingredient:
- *    delete:
- *      summary: Remove an Ingredient from a Recipe
- *      tags: [ Ingredient ]
- *      security:
- *        - bearerAuth: []
- *      requestBody:
- *        description: The request body needs the ingredient id and the recipe id
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                  ingredientId:
- *                      type: string
- *                      description: The ingredient's id to be removed
- *                      required: true
- *                  recipeId:
- *                      type: string
- *                      description: The recime's id where the ingredient is removed
- *                      required: true
- *      responses:
- *          200:
- *              description: The ingredient is successfully removed from the recipe
- *          400:
- *              description: The ingredient is not removed from the recipe
  */
 
 /**
@@ -947,7 +834,7 @@
  * @swagger
  * /step/{id}:
  *    delete:
- *      summary: Delete an step
+ *      summary: Delete an step and remove from recipe
  *      tags: [ Step ]
  *      operationId: deleteStep
  *      produces:
@@ -976,37 +863,6 @@
 
 /**
  * @swagger
- * /step:
- *    delete:
- *      summary: Remove a Step from a Recipe
- *      tags: [ Step ]
- *      security:
- *        - bearerAuth: []
- *      requestBody:
- *        description: The request body needs the step id and the recipe id
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                  stepId:
- *                      type: string
- *                      description: The step's id to be removed
- *                      required: true
- *                  recipeId:
- *                      type: string
- *                      description: The recipe's id where the step is removed
- *                      required: true
- *      responses:
- *          200:
- *              description: The step is successfully removed from the recipe
- *          400:
- *              description: The step is not removed from the recipe
- */
-
-/**
- * @swagger
  * /user:
  *    get:
  *      summary: Returns the list of all the users
@@ -1028,6 +884,13 @@
  *      produces:
  *        - application/json
  *      parameters:
+ *        - in: query
+ *          name: value
+ *          description: The name value to filter the user
+ *          required: false
+ *          schema:
+ *              type: string
+ *              enum: [recipes]
  *        - in: path
  *          name: id
  *          description: The user's id that needs to be showed
@@ -1168,6 +1031,39 @@
 
 /**
  * @swagger
+ * /user/recipe/owner:
+ *    post:
+ *      summary: Push a Recipe into an User
+ *      tags: [ User ]
+ *      security:
+ *        - bearerAuth: []
+ *      requestBody:
+ *        description: The request body needs the user's id and the the recipe's id where the recipe is pushed
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  userId:
+ *                      type: string
+ *                      description: The user Id
+ *                      example: 6266804d903cb3fc821c64bc
+ *                      required: true
+ *                  recipeId:
+ *                      type: string
+ *                      description: The recipe Id
+ *                      example: 62663b435cd516f42bc22de8
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The recipe is successfully pushed into a user
+ *          400:
+ *              description: The Recipe is not pushed
+ */
+
+/**
+ * @swagger
  * /user/{id}:
  *    patch:
  *      summary: Edit the User profile information
@@ -1221,6 +1117,40 @@
 
 /**
  * @swagger
+ * /user/admin/{id}:
+ *    patch:
+ *      summary: Edit the User profile information
+ *      tags: [ User ]
+ *      security:
+ *        - bearerAuth: []
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: The user's id to be edited
+ *          required: true
+ *          schema:
+ *              type: string
+ *          example: 6266804d903cb3fc821c64bc
+ *      requestBody:
+ *          content:
+ *            multipart/form-data:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  admin:
+ *                    type: string
+ *                    required: true
+ *                    description: If the user has admin rights then the value is true
+ *                    enum: [true, false]
+ *      responses:
+ *          200:
+ *              description: The user is successfully edited
+ *          400:
+ *              description: The user is not edited
+ */
+
+/**
+ * @swagger
  * /user/recipe:
  *    delete:
  *      summary: Remove a user from a Recipe
@@ -1250,6 +1180,39 @@
  *              description: The user is successfully removed from the recipe
  *          400:
  *              description: The user is not removed from the recipe
+ */
+
+/**
+ * @swagger
+ * /user/recipe/owner:
+ *    delete:
+ *      summary: Remove a Recipe from an User
+ *      tags: [ User ]
+ *      security:
+ *        - bearerAuth: []
+ *      requestBody:
+ *        description: The request body needs the user id and the recipe id
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  userId:
+ *                      type: string
+ *                      description: The user's id where the recipe is removed
+ *                      example: 6266804d903cb3fc821c64bc
+ *                      required: true
+ *                  recipeId:
+ *                      type: string
+ *                      description: The recipe's id removed
+ *                      example: 62663b435cd516f42bc22de8
+ *                      required: true
+ *      responses:
+ *          200:
+ *              description: The recipe is successfully removed from the user
+ *          400:
+ *              description: The recipe is not removed from the user
  */
 
 /**
@@ -1350,37 +1313,4 @@
  *                    $ref: '#/components/schema/Comment'
  *          400:
  *              description: Commentary not found
- */
-
-/**
- * @swagger
- * /comments:
- *    delete:
- *      summary: Remove a commentary from a Recipe
- *      tags: [ Comment ]
- *      security:
- *        - bearerAuth: []
- *      requestBody:
- *        description: The request body needs the comment's id and the the recipe's id where the comment is removed
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                  commentId:
- *                      type: string
- *                      description: The comment Id
- *                      example: 6266892118ca9852956a14ef
- *                      required: true
- *                  recipeId:
- *                      type: string
- *                      description: The recipe Id
- *                      example: 6266892118ca9852956a14ef
- *                      required: true
- *      responses:
- *          200:
- *              description: The user is successfully pushed into a comment
- *          400:
- *              description: The User is not pushed
  */
