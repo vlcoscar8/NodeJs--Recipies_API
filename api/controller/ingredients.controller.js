@@ -68,12 +68,10 @@ const editIngredient = async (req, res, next) => {
 const removeIngredient = async (req, res, next) => {
     try {
         const { id } = req.params;
-
-        const ing = await Ingredient.findById(id);
-        const recipe = await Recipe.findOne({ ingredients: ing });
+        const recipe = await Recipe.findOne({ ingredients: id });
 
         await Recipe.findOneAndUpdate(
-            { ingredients: ing },
+            { ingredients: id },
             {
                 $pull: { ingredients: id },
             }
@@ -84,6 +82,7 @@ const removeIngredient = async (req, res, next) => {
 
         res.status(200).json({
             status: 200,
+            message: "OK",
             updated: updatedRecipe,
             deleted: deletedIng,
         });

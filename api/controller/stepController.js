@@ -57,12 +57,10 @@ const editStep = async (req, res, next) => {
 const removeStep = async (req, res, next) => {
     try {
         const { id } = req.params;
+        const recipe = await Recipe.findOne({ steps: id });
 
-        const step = await Step.findById(id);
-        const recipe = await Recipe.findOne({ steps: step });
-
-        await Recipe.findByIdAndUpdate(
-            { steps: step },
+        await Recipe.findOneAndUpdate(
+            { steps: id },
             {
                 $pull: {
                     steps: id,
@@ -75,6 +73,7 @@ const removeStep = async (req, res, next) => {
 
         res.status(200).json({
             status: 200,
+            message: "OK",
             updated: updatedRecipe,
             deleted: deletedStep,
         });

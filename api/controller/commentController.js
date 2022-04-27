@@ -48,14 +48,13 @@ const removeComment = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const comment = await Comment.findById(id);
-        const recipe = await Recipe.findOne({ comments: comment });
+        const recipe = await Recipe.findOne({ comments: id });
 
-        await Recipe.findByIdAndUpdate(
-            { comments: comment },
+        await Recipe.findOneAndUpdate(
+            { comments: id },
             {
                 $pull: {
-                    coments: id,
+                    comments: id,
                 },
             }
         );
@@ -63,8 +62,11 @@ const removeComment = async (req, res, next) => {
         const deletedComment = await Comment.findByIdAndDelete(id);
         const updatedRecipe = await Recipe.findOne({ title: recipe.title });
 
+        console.log(updatedRecipe);
+
         res.status(200).json({
             status: 200,
+            message: "OK",
             updated: updatedRecipe,
             deleted: deletedComment,
         });

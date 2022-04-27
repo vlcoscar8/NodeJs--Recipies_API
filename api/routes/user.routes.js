@@ -30,7 +30,7 @@ router.patch(
     [upload.single("img"), uploadToCloudinary, isAuth],
     editUser
 );
-router.patch("/admin/:id", [isAuth], editUserRol);
+router.patch("/admin/:id", [adminAuth], editUserRol);
 router.delete("/recipe", [isAuth], removeUserFromRecipe);
 router.delete("/recipe/owner", [isAuth], removeRecipeFromUser);
 

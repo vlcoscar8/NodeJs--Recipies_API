@@ -31,7 +31,7 @@ const registerUser = async (req, res, next) => {
             password: passwordHash,
             username: username,
             admin: false,
-            img: "https://res.cloudinary.com/oscar-perez-romero/image/upload/v1650820243/userImage_an9td7.png",
+            img: "https://res.cloudinary.com/oscar-perez/image/upload/v1651068282/RecipeAssets/FoodCategory/userImage_hsw5hj.png",
         });
 
         await newUser.save();
@@ -134,10 +134,27 @@ const getUserList = async (req, res, next) => {
 const getUserDetail = async (req, res, next) => {
     try {
         const { id } = req.params;
+        const { value } = req.query;
 
-        const user = await User.findById(id).populate("recipes");
+        const user = await User.findById(id).populate(value ? `${value}` : "");
 
-        res.status(200).json(user);
+        const userObj = Object.values(user)[2];
+        const cleanObj = Object.entries(userObj);
+
+        cleanObj.forEach((el) =>
+            el[0] === `${value}`
+                ? res.status(200).json({
+                      status: 200,
+                      message:
+                          el[1].length < 1
+                              ? `${value} list is empty`
+                              : `${value} value is successfully filtered`,
+                      data: el[1],
+                  })
+                : ""
+        );
+
+        return res.status(200).json(user);
     } catch (error) {
         return next(error);
     }

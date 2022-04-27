@@ -1,5 +1,6 @@
 import { Recipe } from "../model/recipeSchema.js";
 import { Food } from "../model/foodSchema.js";
+import { User } from "../model/userSchema.js";
 
 const getRecipesList = async (req, res, next) => {
     try {
@@ -96,7 +97,7 @@ const editRecipe = async (req, res, next) => {
             return res
                 .status(400)
                 .json(
-                    "The title is already created in other recipe, please choose another one"
+                    "The title of the recipe already exist, please try with another title"
                 );
         };
 
@@ -112,7 +113,7 @@ const editRecipe = async (req, res, next) => {
 
         const editedRecipe = await Recipe.findById(id);
 
-        res.status(200).json(editedRecipe);
+        return res.status(200).json(editedRecipe);
     } catch (error) {
         return next(error);
     }
@@ -136,12 +137,18 @@ const pushRecipeIntoFood = async (req, res, next) => {
 const removeRecipe = async (req, res, next) => {
     try {
         const { id } = req.params;
-
-        const recipe = await Recipe.findById(id);
-        const food = await Food.findOne({ recipes: recipe });
+        const food = await Food.findOne({ recipes: id });
+        const user = await User.findOne({ recipes: id });
 
         await Food.findOneAndUpdate(
-            { recipes: recipe },
+            { recipes: id },
+            {
+                $pull: { recipes: id },
+            }
+        );
+
+        await User.findOneAndUpdate(
+            { recipes: id },
             {
                 $pull: { recipes: id },
             }
@@ -149,12 +156,17 @@ const removeRecipe = async (req, res, next) => {
 
         const deletedRecipe = await Recipe.findByIdAndDelete(id);
         const updatedFood = await Food.findOne({ name: food.name });
+        const updatedUser = await User.findOne({ username: user.username });
 
         res.status(200).json({
             status: 200,
-            updated: updatedFood,
+            message: "OK",
+            updatedFood: updatedFood,
+            updatedUser: updatedUser,
             deleted: deletedRecipe,
         });
+
+        res.status(200).json(food);
     } catch (error) {
         return next(error);
     }
