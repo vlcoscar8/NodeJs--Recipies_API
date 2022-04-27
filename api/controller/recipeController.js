@@ -22,13 +22,32 @@ const getRecipesList = async (req, res, next) => {
 const getRecipeDetail = async (req, res, next) => {
     try {
         const { id } = req.params;
+        const filterValue = Object.keys(req.query)[0];
 
-        const recipe = await Recipe.findById(id)
-            .populate("ingredients")
-            .populate("steps")
-            .populate("comments");
+        if (Object.keys(req.query).length > 1) {
+            return res
+                .status(400)
+                .json("Only is possible to filter by one value");
+        }
 
-        res.status(200).json(recipe);
+        const recipe = await Recipe.findById(id).populate(
+            filterValue ? `${filterValue}` : ""
+        );
+
+        const recipeObj = Object.values(recipe)[2];
+        const cleanObj = Object.entries(recipeObj);
+
+        cleanObj.forEach((el) =>
+            el[0] === `${filterValue}`
+                ? res.status(200).json({
+                      status: 200,
+                      message: `${filterValue} value is successfully filtered`,
+                      data: el[1],
+                  })
+                : ""
+        );
+
+        return res.status(200).json(recipe);
     } catch (error) {
         return next(error);
     }
