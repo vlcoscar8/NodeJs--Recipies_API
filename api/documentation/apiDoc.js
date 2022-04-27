@@ -1,7 +1,7 @@
 /**
  * @swagger
  *  components:
- *      schema:
+ *      schemas:
  *          Food:
  *              type: object
  *              properties:
