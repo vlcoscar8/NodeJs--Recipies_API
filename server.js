@@ -17,6 +17,7 @@ import { commentsRouter } from "./api/routes/comments.routes.js";
 dotenv.config();
 
 const PORT = process.env.PORT;
+const HEROKU = process.env.HEROKU;
 const server = express();
 const router = express.Router();
 
@@ -51,7 +52,7 @@ const swaggerSpec = {
         },
         servers: [
             {
-                url: `http://localhost:${PORT}`, // The URL of the api
+                url: `http://localhost:3000`, // The URL of the api
             },
         ],
     },

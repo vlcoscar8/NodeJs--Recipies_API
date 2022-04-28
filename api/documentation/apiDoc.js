@@ -145,6 +145,13 @@
 
 /**
  * @swagger
+ *    servers:
+ *    - url: https://apirecetasoscar.herokuapp.com/
+ *
+ */
+
+/**
+ * @swagger
  *  components:
  *    securitySchemes:
  *      bearerAuth:
@@ -193,7 +200,7 @@
  *          schema:
  *              type: integer
  *              minimum: 0
- *              maximum: 9
+ *              maximum: 20
  *              default: 0
  *        - in: query
  *          name: limit
@@ -202,7 +209,7 @@
  *          schema:
  *              type: integer
  *              minimum: 1
- *              maximum: 10
+ *              maximum: 20
  *              default: 10
  *      responses:
  *          200:
@@ -295,7 +302,7 @@
  *              schema:
  *                type: object
  *                properties:
- *                  foodName:
+ *                  name:
  *                    type: string
  *                    description: The new food family name to be updated
  *                  img:
@@ -330,11 +337,6 @@
  *      responses:
  *          200:
  *              description: The food has been deleted
- *              content:
- *                application/json:
- *                  schema:
- *                    type: object
- *                    $ref: '#/components/schema/Food'
  *          400:
  *              description: Food not found
  */
@@ -359,7 +361,6 @@
  *          required: false
  *          schema:
  *              type: string
- *          example: pasta
  *        - in: query
  *          name: difficulty
  *          description: The difficulty filter of the recipe
@@ -373,7 +374,6 @@
  *          required: false
  *          schema:
  *              type: integer
- *          example: 20
  *      responses:
  *          200:
  *              description: The list of the recipes
@@ -388,8 +388,6 @@
  *      summary: Find the recipe by id
  *      tags: [ Recipe ]
  *      operationId: findRecipe
- *      produces:
- *        - application/json
  *      parameters:
  *        - in: query
  *          name: value
@@ -408,11 +406,6 @@
  *      responses:
  *          200:
  *              description: The recipe is successfully finded
- *              content:
- *                application/json:
- *                  schema:
- *                    type: object
- *                    $ref: '#/components/schema/Recipe'
  *          400:
  *              description: Recipe not found
  */
@@ -595,11 +588,6 @@
  *      responses:
  *          200:
  *              description: The recipe has been deleted
- *              content:
- *                application/json:
- *                  schema:
- *                    type: object
- *                    $ref: '#/components/schema/Recipe'
  *          400:
  *              description: Recipe not found
  */
@@ -739,11 +727,6 @@
  *      responses:
  *          200:
  *              description: The ingredient has been deleted
- *              content:
- *                application/json:
- *                  schema:
- *                    type: object
- *                    $ref: '#/components/schema/Ingredient'
  *          400:
  *              description: Ingredient not found
  */
@@ -852,11 +835,6 @@
  *      responses:
  *          200:
  *              description: The step has been deleted
- *              content:
- *                application/json:
- *                  schema:
- *                    type: object
- *                    $ref: '#/components/schema/Step'
  *          400:
  *              description: Step not found
  */
@@ -901,11 +879,6 @@
  *      responses:
  *          200:
  *              description: The User finded
- *              content:
- *                application/json:
- *                  schema:
- *                    type: object
- *                    $ref: '#/components/schema/User'
  *          400:
  *              description: User not found
  */
@@ -1306,11 +1279,6 @@
  *      responses:
  *          200:
  *              description: The commentary has been deleted
- *              content:
- *                application/json:
- *                  schema:
- *                    type: object
- *                    $ref: '#/components/schema/Comment'
  *          400:
  *              description: Commentary not found
  */
