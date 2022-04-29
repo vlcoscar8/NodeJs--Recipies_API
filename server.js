@@ -52,7 +52,7 @@ const swaggerSpec = {
         },
         servers: [
             {
-                url: `http://localhost:3000`, // The URL of the api
+                url: `${HEROKU}`, // The URL of the api
             },
         ],
     },
