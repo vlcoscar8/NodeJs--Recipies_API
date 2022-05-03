@@ -27,7 +27,11 @@ server.set("secretKey", "nodeRestApi");
 //Middlewares
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-server.use(cors());
+server.use(
+    cors({
+        origin: `${HEROKU}`,
+    })
+);
 server.use(
     session({
         secret: process.env.SESSION_SECRET,
