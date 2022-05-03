@@ -29,7 +29,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(
     cors({
-        origin: `${HEROKU}`,
+        origin: `https://apirecetasoscar.herokuapp.com/`,
     })
 );
 server.use(
