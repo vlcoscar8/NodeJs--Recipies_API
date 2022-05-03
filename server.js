@@ -64,6 +64,32 @@ const swaggerSpec = {
     apis: [`./api/documentation/*.js`], // The file where the documentation is written
 };
 
+server.patch("/cors", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Content-Type,Content-Length,Server,Date,access-control-allow-methods,access-control-allow-origin"
+    );
+    res.header(
+        "Access-Control-Allow-Methods",
+        "PUT,POST,GET,DELETE,OPTIONS,PATCH"
+    );
+    res.send("ok");
+});
+
+server.options("/*", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Content-Type,Content-Length,Server,Date,access-control-allow-methods,access-control-allow-origin"
+    );
+    res.header(
+        "Access-Control-Allow-Methods",
+        "PUT,POST,GET,DELETE,OPTIONS,PATCH"
+    );
+    res.send("send some thing whatever");
+});
+
 //Router
 server.use("/", router);
 server.use("/food", foodRouter);
@@ -77,18 +103,6 @@ server.use(
     swaggerUi.serve,
     swaggerUi.setup(swaggerJsDoc(swaggerSpec))
 );
-server.patch("/cors", (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Content-Type,Content-Length,Server,Date,access-control-allow-methods,access-control-allow-origin"
-    );
-    res.header(
-        "Access-Control-Allow-Methods",
-        "PUT,POST,GET,DELETE,OPTIONS,PATCH"
-    );
-    res.send("ok");
-});
 
 // Errors
 server.use("*", (req, res, next) => {
