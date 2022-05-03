@@ -56,7 +56,7 @@ const swaggerSpec = {
         },
         servers: [
             {
-                url: `${HEROKU}`, // The URL of the api
+                url: `https://apirecetasoscar.herokuapp.com/`, // The URL of the api
             },
         ],
     },
