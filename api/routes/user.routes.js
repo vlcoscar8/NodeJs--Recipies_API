@@ -26,8 +26,8 @@ router.post("/login", logInUser);
 router.post("/logout", logOutUser);
 router.post("/recipe", [isAuth], pushUserIntoRecipe);
 router.post("/recipe/owner", [isAuth], pushRecipeIntoUser);
-router.patch(
-    "/:id",
+router.post(
+    "edit/:id",
     [upload.single("img"), uploadToCloudinary, isAuth, cors()],
     editUser
 );

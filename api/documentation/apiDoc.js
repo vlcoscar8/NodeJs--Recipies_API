@@ -1037,8 +1037,8 @@
 
 /**
  * @swagger
- * /user/{id}:
- *    patch:
+ * /user/edit/{id}:
+ *    post:
  *      summary: Edit the User profile information
  *      tags: [ User ]
  *      consumes:
