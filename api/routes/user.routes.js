@@ -1,4 +1,4 @@
-import Express from "express";
+import express from "express";
 import { isAuth } from "../../middleware/jwt.js";
 import { adminAuth } from "../../middleware/authToken.js";
 import { upload, uploadToCloudinary } from "../../middleware/uploadCloud.js";
@@ -17,7 +17,7 @@ import {
 } from "../controller/userController.js";
 import cors from "cors";
 
-const router = Express.Router();
+const router = express.Router();
 
 router.get("/", getUserList);
 router.get("/:id", getUserDetail);

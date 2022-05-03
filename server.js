@@ -31,8 +31,10 @@ server.use(
     cors({
         origin: `*`,
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        allowedHeaders: ["Content-Type", "Authorization"],
     })
 );
+server.options("/user/:id", cors());
 server.use(
     session({
         secret: process.env.SESSION_SECRET,
@@ -63,32 +65,6 @@ const swaggerSpec = {
     },
     apis: [`./api/documentation/*.js`], // The file where the documentation is written
 };
-
-server.patch("/cors", (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Content-Type,Content-Length,Server,Date,access-control-allow-methods,access-control-allow-origin"
-    );
-    res.header(
-        "Access-Control-Allow-Methods",
-        "PUT,POST,GET,DELETE,OPTIONS,PATCH"
-    );
-    res.send("ok");
-});
-
-server.options("/*", (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Content-Type,Content-Length,Server,Date,access-control-allow-methods,access-control-allow-origin"
-    );
-    res.header(
-        "Access-Control-Allow-Methods",
-        "PUT,POST,GET,DELETE,OPTIONS,PATCH"
-    );
-    res.send("send some thing whatever");
-});
 
 //Router
 server.use("/", router);
