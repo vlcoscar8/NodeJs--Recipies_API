@@ -29,8 +29,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(
     cors({
-        origin: `http://localhost:4000`,
-        methods: "GET, PUT, DELETE, POST, PATCH",
+        origin: `http://localhost`,
     })
 );
 server.use(
