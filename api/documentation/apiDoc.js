@@ -1037,7 +1037,7 @@
 
 /**
  * @swagger
- * /user/edit/{id}:
+ * /user/{id}:
  *    post:
  *      summary: Edit the User profile information
  *      tags: [ User ]

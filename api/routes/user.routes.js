@@ -15,7 +15,6 @@ import {
     removeUserFromRecipe,
     removeRecipeFromUser,
 } from "../controller/userController.js";
-import cors from "cors";
 
 const router = express.Router();
 
@@ -27,8 +26,8 @@ router.post("/logout", logOutUser);
 router.post("/recipe", [isAuth], pushUserIntoRecipe);
 router.post("/recipe/owner", [isAuth], pushRecipeIntoUser);
 router.post(
-    "edit/:id",
-    [upload.single("img"), uploadToCloudinary, isAuth, cors()],
+    "/:id",
+    [upload.single("img"), uploadToCloudinary, isAuth],
     editUser
 );
 router.patch("/admin/:id", [adminAuth], editUserRol);
