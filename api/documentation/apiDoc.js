@@ -538,7 +538,7 @@
 /**
  * @swagger
  * /recipes/food:
- *    patch:
+ *    post:
  *      summary: Push a Recipe into a Food family
  *      tags: [ Recipe ]
  *      security:

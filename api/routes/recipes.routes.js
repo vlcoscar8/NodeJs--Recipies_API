@@ -24,7 +24,7 @@ router.put(
     [upload.single("img"), uploadToCloudinary, isAuth],
     editRecipe
 );
-router.patch("/food", [isAuth], pushRecipeIntoFood);
+router.post("/food", [isAuth], pushRecipeIntoFood);
 router.delete("/:id", [isAuth], removeRecipe);
 
 export { router as recipeRouter };
