@@ -59,7 +59,7 @@ const swaggerSpec = {
         },
         servers: [
             {
-                url: `https://apirecetasoscar.herokuapp.com/`, // The URL of the api
+                url: `https://recipies-api.vercel.app/`, // The URL of the api
             },
         ],
     },
