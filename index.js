@@ -63,7 +63,7 @@ const swaggerSpec = {
             },
         ],
     },
-    apis: [`${recipies}/api/documentation/*.js`], // The file where the documentation is written
+    apis: [`./api/documentation/*.js`], // The file where the documentation is written
 };
 
 //Router
